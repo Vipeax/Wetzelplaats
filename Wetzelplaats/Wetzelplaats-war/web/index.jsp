@@ -9,12 +9,10 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
-    <body>
-        <p>Dit is een test!</p>
-    </body>
+        <title>JSP Page</title>    
     </head>
     <body>
         <h1>Hello World!</h1>
+        <p>Dit is een test!</p>
     </body>
 </html>
