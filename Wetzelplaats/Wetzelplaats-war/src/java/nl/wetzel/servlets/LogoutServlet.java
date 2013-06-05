@@ -6,25 +6,19 @@ package nl.wetzel.servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
-import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import nl.wetzel.entities.User;
-import nl.wetzel.facades.UserFacadeLocal;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author Timo
  */
-@WebServlet(name = "UserTest", urlPatterns = {"/users"})
-public class UserTest extends HttpServlet {
-
-    @EJB
-    private UserFacadeLocal userFacade;
+@WebServlet(name = "LogoutServlet", urlPatterns = {"/logout"})
+public class LogoutServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP
@@ -38,35 +32,12 @@ public class UserTest extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
-        try {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet UserTest</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet UserTest at " + request.getContextPath() + "</h1>");
-
-            List<User> users = userFacade.findAll();
-
-            if (users.size() > 0) {
-                out.println("<ul>");
-                for (User user : users) {
-                    out.println("<li>" + user.getFirstname() + " " + user.getLastname() + "</li>");
-                }
-                out.println("</ul>");
-            } else {
-                out.println("<p>There are no users!</p>");
-            }
-
-            out.println("</body>");
-            out.println("</html>");
-        } finally {
-            out.close();
-        }
+      HttpSession session = request.getSession(false);
+      
+      if(session != null) {
+          session.invalidate();
+          response.sendRedirect("index.jsp");
+      }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

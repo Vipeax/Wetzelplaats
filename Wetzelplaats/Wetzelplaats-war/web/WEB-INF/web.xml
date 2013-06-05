@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="3.0" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
+    <session-config>
+        <session-timeout>
+            30
+        </session-timeout>
+    </session-config>
+    <jsp-config>
+        <jsp-property-group>
+            <description>JSP configuration for the admin console</description>
+            <display-name>login</display-name>
+            <url-pattern>/login/login.jsp</url-pattern>
+            <url-pattern>/login/index.jsp</url-pattern>
+            <url-pattern>/login/error.jsp</url-pattern>
+            <include-prelude>/admin/jspf/header.jspf</include-prelude>
+            <include-coda>/admin/jspf/footer.jspf</include-coda>
+        </jsp-property-group>
+    </jsp-config>
+    <security-constraint>
+        <display-name>General</display-name>
+        <web-resource-collection>
+            <web-resource-name>Using the site</web-resource-name>
+            <description>At the moment, only when people want to see the users in the mysql database</description>
+            <url-pattern>/users</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description>all users</description>
+            <role-name>Admin</role-name>
+            <role-name>User</role-name>
+        </auth-constraint>
+    </security-constraint>
+    <login-config>
+        <auth-method>FORM</auth-method>
+        <realm-name>file</realm-name>
+        <form-login-config>
+            <form-login-page>/login/login.jsp</form-login-page>
+            <form-error-page>/login/error.jsp</form-error-page>
+        </form-login-config>
+    </login-config>
+    <security-role>
+        <description>Being an admin is awesome!</description>
+        <role-name>Admin</role-name>
+    </security-role>
+    <security-role>
+        <description>Just a normal user</description>
+        <role-name>User</role-name>
+    </security-role>
+</web-app>
