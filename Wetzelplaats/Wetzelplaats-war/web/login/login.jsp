@@ -1,8 +1,9 @@
-<form action="j_security_check" method="POST">
+<form action="/login" method="POST">
     <h2>Login here!</h2>
     <div id="loginBox">
-        <p>username: <input type="text" name="j_username"></p>
-        <p>password: <input type="password" name="j_password"></p>
+        <p>username: <input type="text" name="txtUsername"></p>
+        <p>password: <input type="password" name="txtPassword"></p>
         <p><input type="submit" value="submit"/></p>
+        <p><a href="/register">register</a></p>
     </div>
 </form>

@@ -6,6 +6,7 @@ package nl.wetzel.servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.security.Principal;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -37,6 +38,8 @@ public class LogoutServlet extends HttpServlet {
       if(session != null) {
           session.invalidate();
           response.sendRedirect("index.jsp");
+          Principal userName = request.getUserPrincipal();
+          
       }
     }
 
