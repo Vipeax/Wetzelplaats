@@ -11,7 +11,7 @@
         <div class="header">
             <h2>Wetzelplaats</h2>
             <div class="login">
-                <a href="/login">Login</a> or <a href="/register">register</a>
+                <a href="login">Login</a> or <a href="register">register</a>
             </div>
         </div>
         <div class="main">

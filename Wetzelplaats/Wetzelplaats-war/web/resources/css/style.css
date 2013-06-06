@@ -44,3 +44,43 @@ root {
 .main {
     padding: 40px;
 }
+
+
+/*=======================*/
+/* LOGIN                 */
+/*=======================*/
+
+.loginBox {
+    width: 500px;
+    margin: 200px auto;
+    border: 1px solid #010000;
+}
+
+.loginBox form > div, .loginBox h2 {
+    padding: 10px 10px;
+}
+
+.loginBox form > div > label {
+    display: inline-block;
+    width:150px;
+}
+
+.loginBox .message {
+    border: 1px solid #010000;
+    width: 350px;
+    margin: 5px auto;
+    padding: 10px;
+}
+
+.loginBox .message.error {
+    background-color: #f09393;
+}
+
+.loginBox .message.success {
+    background-color: #57f149;
+}
+
+.loginBox .error ul, .loginBox .success ul {
+    padding-left:30px;
+}
+
