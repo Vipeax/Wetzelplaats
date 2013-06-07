@@ -24,7 +24,7 @@ import nl.wetzel.facades.UserFacadeLocal;
  */
 @WebServlet(name = "RegisterServlet", urlPatterns = {"/register"})
 public class RegisterServlet extends HttpServlet {
-
+    
     @EJB
     private UserFacadeLocal userFacade;
 
@@ -62,7 +62,7 @@ public class RegisterServlet extends HttpServlet {
         String email = request.getParameter("txtEmail");
         String password = request.getParameter("txtPassword");
         String password2 = request.getParameter("txtPassword2");
-
+        
         ArrayList<String> errors = new ArrayList<String>();
         //error check
         if (firstname.isEmpty()) {
@@ -83,7 +83,7 @@ public class RegisterServlet extends HttpServlet {
         if (!password.isEmpty() && !password2.isEmpty() && !password.equals(password2)) {
             errors.add("Passwords do not match");
         }
-
+        
         if (errors.size() > 0) {
             showError(request, response, firstname, lastname, email, password, password2, errors);
             return;
@@ -96,9 +96,10 @@ public class RegisterServlet extends HttpServlet {
         User user = new User(0, firstname, lastname, email, hashedPassword);
         userFacade.create(user);
 
-        request.setAttribute("registered", true);
+//        request.setAttribute("registered", true);
+        request.getSession().setAttribute("registered", true);
 //        request.getRequestDispatcher("/login").forward(request, response);
-        response.sendRedirect("login?s=1");
+        response.sendRedirect("login");
 //        } catch (EJBException e) {
 //            errors.add(e.getMessage());
 //            errors.add(e.getLocalizedMessage());
@@ -111,7 +112,7 @@ public class RegisterServlet extends HttpServlet {
 
         //TODO Mail the password to the user
     }
-
+    
     private void showError(HttpServletRequest request, HttpServletResponse response, String firstname, String lastname, String email, String password, String password2, ArrayList<String> errors) throws ServletException, IOException {
         request.setAttribute("firstname", firstname);
         request.setAttribute("lastname", lastname);
