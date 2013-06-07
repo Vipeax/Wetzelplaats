@@ -1,17 +1,26 @@
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Wetzelplaats</title>
-        <link rel="stylesheet" type="text/css" href="${initParam.cssPath}/style.css"
+        <link rel="stylesheet" type="text/css" href="resources/css/style.css"
     </head>
     <body>
         <div class="container">
-        <div class="header">
-            <h2>Wetzelplaats</h2>
-            <div class="login">
-                <a href="login">Login</a> or <a href="register">register</a>
+            <div class="header">
+                <h2>Wetzelplaats</h2>
+                <div class="login">
+                    <c:choose>
+                        <c:when test="${user == null}">
+                            <a href="login">login</a> or <a href="register">register</a>
+                        </c:when>
+                        <c:otherwise>
+                            Welcome, ${user.firstname}! <a href="logout">logout</a>
+                        </c:otherwise>
+                    </c:choose>
+
+                </div>
             </div>
-        </div>
-        <div class="main">
+            <div class="main">

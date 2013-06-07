@@ -43,7 +43,12 @@ public class LoginServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
+        
         /* TODO: Check when user is already logged in and forward him to the index page or where ever he came from */
+        if(session.getAttribute("user") != null) {
+            response.sendRedirect("index.jsp");
+            return;
+        }
 
         Boolean registered = (Boolean) session.getAttribute("registered");
 
