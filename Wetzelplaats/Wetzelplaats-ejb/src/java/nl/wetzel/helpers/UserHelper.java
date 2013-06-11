@@ -22,7 +22,7 @@ public class UserHelper {
 
     @EJB
     private UserFacadeLocal userFacade;
-    
+
     //<editor-fold defaultstate="collapsed" desc="constructors">    
     public UserHelper() {
     }
@@ -42,16 +42,30 @@ public class UserHelper {
         }
 
         return u;
-    }    
-    
-    public void Register(String firstname, String lastname, String email, String password) {
-        User u = new User();
-        u.setFirstname(firstname);
-        u.setLastname(lastname);
-        u.setEmail(email);
-        u.setPassword(BCrypt.hashpw(password, BCrypt.gensalt()));
-        
-        userFacade.create(u);        
+    }
+
+    public User Register(String firstname, String lastname, String email, String password) {
+        //check if data complete
+        if (firstname == null || lastname == null || email == null || password == null) {
+            return null;
+        }
+
+        //check duplicate
+        User duplicate = userFacade.getUser(email);
+
+        if (duplicate != null) {
+            return null;
+        } else {
+            User u = new User();
+            u.setFirstname(firstname);
+            u.setLastname(lastname);
+            u.setEmail(email);
+            u.setPassword(BCrypt.hashpw(password, BCrypt.gensalt()));
+
+            userFacade.create(u);
+
+            return u;
+        }
     }
 
     //<editor-fold defaultstate="collapsed" desc="getters/setters">

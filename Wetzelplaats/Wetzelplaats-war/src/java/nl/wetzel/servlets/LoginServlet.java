@@ -47,7 +47,6 @@ public class LoginServlet extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession();
 
-        /* TODO: Check when user is already logged in and forward him to the index page or where ever he came from */
         if (session.getAttribute("user") != null) {
             response.sendRedirect("index.jsp");
             return;
@@ -113,8 +112,6 @@ public class LoginServlet extends HttpServlet {
 
             request.getRequestDispatcher("/WEB-INF/login/login.jsp").forward(request, response);
         }
-
-        //TODO finish the login shizzle by putting the login code to a custom manager! It's fugly in the post
     }
 
     /**

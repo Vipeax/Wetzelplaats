@@ -40,6 +40,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Advertisement.findByIsSold", query = "SELECT a FROM Advertisement a WHERE a.isSold = :isSold"),
     @NamedQuery(name = "Advertisement.findByEPriceType", query = "SELECT a FROM Advertisement a WHERE a.ePriceType = :ePriceType")})
 public class Advertisement implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -164,7 +165,7 @@ public class Advertisement implements Serializable {
 
     @Override
     public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
+        // Warning - this method won't work in the case the id fields are not set
         if (!(object instanceof Advertisement)) {
             return false;
         }
@@ -179,5 +180,4 @@ public class Advertisement implements Serializable {
     public String toString() {
         return "nl.wetzel.entities.Advertisement[ id=" + id + " ]";
     }
-    
 }

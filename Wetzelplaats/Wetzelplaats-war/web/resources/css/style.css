@@ -42,9 +42,24 @@ root {
 }
 
 .main {
-    padding: 40px;
+    padding: 20px;
 }
 
+/*=======================*/
+/* INDEX                 */
+/*=======================*/
+.action-menu {
+    border:1px solid #010000;
+    min-height:20px;
+    margin:0;
+    padding:0;
+}
+
+.ad-container {
+    border:1px solid #010000;
+    min-height:200px;
+    margin:20px 0 0 0;
+}
 
 /*=======================*/
 /* LOGIN                 */

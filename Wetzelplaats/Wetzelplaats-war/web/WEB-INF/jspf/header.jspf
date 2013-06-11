@@ -5,7 +5,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Wetzelplaats</title>
-        <link rel="stylesheet" type="text/css" href="resources/css/style.css"
+        <link rel="stylesheet" type="text/css" href="/Wetzelplaats-war/resources/css/style.css"
     </head>
     <body>
         <div class="container">
@@ -14,7 +14,7 @@
                 <div class="login">
                     <c:choose>
                         <c:when test="${user == null}">
-                            <a href="login">login</a> or <a href="register">register</a>
+                            <a href="/Wetzelplaats-war/login">login</a> or <a href="register">register</a>
                         </c:when>
                         <c:otherwise>
                             Welcome, ${user.firstname}! <a href="logout">logout</a>

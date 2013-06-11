@@ -47,18 +47,20 @@ public class TestUser {
 
         localMock = mock(UserFacadeLocal.class);
         //mock a legit user
-        when(localMock.getUser(rightEmail)).thenReturn(u);
+        when(localMock.getUser(rightEmail)).thenReturn(null);
         //mock wrong password
         when(localMock.getUser(wrongEmail)).thenReturn(null);
         //mock register
         Mockito.doNothing().when(localMock).create(u);
 
         helper = new UserHelper();
-        helper.setUserFacade(localMock);        
+        helper.setUserFacade(localMock);
     }
 
     @Test
     public void testLoginCorrect() {
+        when(localMock.getUser(rightEmail)).thenReturn(u);
+
         User result = helper.login(rightEmail, rightPassword);
 
         verify(localMock).getUser(rightEmail);
@@ -67,6 +69,8 @@ public class TestUser {
 
     @Test
     public void testLoginFalseUsername() {
+        when(localMock.getUser(rightEmail)).thenReturn(u);
+
         User result = helper.login(wrongEmail, rightPassword);
 
         verify(localMock).getUser(wrongEmail);
@@ -75,15 +79,65 @@ public class TestUser {
 
     @Test
     public void testLoginFalsePassword() {
+        when(localMock.getUser(rightEmail)).thenReturn(u);
+
         User result = helper.login(rightEmail, wrongPassword);
 
         verify(localMock).getUser(rightEmail);
         assertEquals(null, result);
     }
-    
+
     @Test
-    public void testRegisterCorrect() {        
-        helper.Register(firstname, lastname, rightEmail, rightPassword);
+    public void testRegisterCorrect() {
+        User created = helper.Register(firstname, lastname, rightEmail, rightPassword);
+
         verify(localMock).create(u);
+        assertEquals(u, created);
+    }
+
+    @Test
+    public void testRegisterMissingFirstname() {
+        User created = helper.Register(null, lastname, rightEmail, rightPassword);
+
+        verify(localMock, times(0)).create(u);
+        assertEquals(null, created);
+    }
+
+    @Test
+    public void testRegisterMissingLastname() {
+        User created = helper.Register(firstname, null, rightEmail, rightPassword);
+
+        verify(localMock, times(0)).create(u);
+        assertEquals(null, created);
+    }
+
+    @Test
+    public void testRegisterMissingEmail() {
+        User created = helper.Register(firstname, lastname, null, rightPassword);
+
+        verify(localMock, times(0)).create(u);
+        assertEquals(null, created);
+    }
+
+    @Test
+    public void testRegisterExistingUser() {
+        User createdFirst = helper.Register(firstname, lastname, rightEmail, rightPassword);
+
+        //fake it so that the database already owns the user
+        when(localMock.getUser(rightEmail)).thenReturn(u);
+
+        User createdSecond = helper.Register(firstname, lastname, rightEmail, rightPassword);
+
+        verify(localMock, times(1)).create(u);
+        assertEquals(u, createdFirst);
+        assertEquals(null, createdSecond);
+    }
+
+    @Test
+    public void testRegisterMissingPassword() {
+        User created = helper.Register(firstname, lastname, rightEmail, null);
+
+        verify(localMock, times(0)).create(u);
+        assertEquals(null, created);
     }
 }

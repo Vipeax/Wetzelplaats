@@ -27,6 +27,7 @@ public interface AdvertisementFacadeLocal {
 
     List<Advertisement> findRange(int[] range);
 
+    List<Advertisement> findByLimit(Integer pageIndex, Integer amount);
+
     int count();
-    
 }

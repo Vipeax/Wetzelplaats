@@ -96,19 +96,10 @@ public class RegisterServlet extends HttpServlet {
         User user = new User(0, firstname, lastname, email, hashedPassword);
         userFacade.create(user);
 
-//        request.setAttribute("registered", true);
         request.getSession().setAttribute("registered", true);
-//        request.getRequestDispatcher("/login").forward(request, response);
         response.sendRedirect("login");
-//        } catch (EJBException e) {
-//            errors.add(e.getMessage());
-//            errors.add(e.getLocalizedMessage());
-//
-//            showError(request, response, firstname, lastname, email, password, password2, errors);
-//        }
-
-        //TODO EJB Exception handling
-//TODO put the registration code in user entity bean manager shizzle
+        
+        //TODO put user in session
 
         //TODO Mail the password to the user
     }

@@ -4,9 +4,11 @@
  */
 package nl.wetzel.facades;
 
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import nl.wetzel.entities.Advertisement;
 
 /**
@@ -15,6 +17,7 @@ import nl.wetzel.entities.Advertisement;
  */
 @Stateless
 public class AdvertisementFacade extends AbstractFacade<Advertisement> implements AdvertisementFacadeLocal {
+
     @PersistenceContext(unitName = "Wetzelplaats-ejbPU")
     private EntityManager em;
 
@@ -26,5 +29,17 @@ public class AdvertisementFacade extends AbstractFacade<Advertisement> implement
     public AdvertisementFacade() {
         super(Advertisement.class);
     }
-    
+
+    @Override
+    public List<Advertisement> findByLimit(Integer pageIndex, Integer amount) {
+        List<Advertisement> result;
+
+        Query q = em.createNamedQuery("Advertisement.findAll", Advertisement.class);
+        q.setMaxResults(amount);
+        q.setFirstResult(pageIndex);
+
+        result = q.getResultList();
+
+        return result;
+    }
 }

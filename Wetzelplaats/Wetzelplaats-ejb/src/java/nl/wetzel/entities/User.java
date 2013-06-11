@@ -37,6 +37,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "User.findByEmail", query = "SELECT u FROM User u WHERE u.email = :email"),
     @NamedQuery(name = "User.findByPassword", query = "SELECT u FROM User u WHERE u.password = :password")})
 public class User implements Serializable {
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
     private Collection<Advertisement> advertisementCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
@@ -133,7 +134,7 @@ public class User implements Serializable {
 
     @Override
     public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
+        // Warning - this method won't work in the case the id fields are not set
         if (!(object instanceof User)) {
             return false;
         }
@@ -166,5 +167,4 @@ public class User implements Serializable {
     public void setBidCollection(Collection<Bid> bidCollection) {
         this.bidCollection = bidCollection;
     }
-    
 }

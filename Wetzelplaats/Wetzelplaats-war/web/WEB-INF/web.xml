@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="3.0" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
-  
     <session-config>
         <session-timeout>
             30
         </session-timeout>
     </session-config>
+    <welcome-file-list>
+        <welcome-file>index</welcome-file>
+    </welcome-file-list>
     <jsp-config>
         <jsp-property-group>
             <description>JSP configuration for the admin console</description>
@@ -17,8 +19,9 @@
         </jsp-property-group>
         <jsp-property-group>
             <description>The main pages</description>
-            <display-name>Main</display-name>
+            <display-name>Main, Advertisement</display-name>
             <url-pattern>/index.jsp</url-pattern>
+            <url-pattern>/WEB-INF/advertisement/*</url-pattern>
             <include-prelude>/WEB-INF/jspf/header.jspf</include-prelude>
             <include-coda>/WEB-INF/jspf/footer.jspf</include-coda>
         </jsp-property-group>
