@@ -4,9 +4,11 @@
  */
 package nl.wetzel.facades;
 
+import com.internet.custom.BCrypt;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import nl.wetzel.entities.User;
 
 /**
@@ -15,6 +17,7 @@ import nl.wetzel.entities.User;
  */
 @Stateless
 public class UserFacade extends AbstractFacade<User> implements UserFacadeLocal {
+
     @PersistenceContext(unitName = "Wetzelplaats-ejbPU")
     private EntityManager em;
 
@@ -25,6 +28,14 @@ public class UserFacade extends AbstractFacade<User> implements UserFacadeLocal 
 
     public UserFacade() {
         super(User.class);
+    }  
+
+    @Override
+    public User getUser(String email) {
+        Query q = em.createNamedQuery("User.findByEmail", User.class);
+        q.setParameter("email", email);
+        User u = (User) q.getSingleResult();
+
+        return u;
     }
-    
 }

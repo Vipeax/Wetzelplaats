@@ -10,6 +10,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
+import javax.persistence.EntityManager;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -18,6 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import nl.wetzel.entities.User;
 import nl.wetzel.facades.UserFacadeLocal;
+import nl.wetzel.helpers.UserHelper;
 
 /**
  *
@@ -27,7 +29,8 @@ import nl.wetzel.facades.UserFacadeLocal;
 public class LoginServlet extends HttpServlet {
 
     @EJB
-    private UserFacadeLocal userFacade;
+//    private UserFacadeLocal userFacade;
+    private UserHelper userHelper;
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -43,9 +46,9 @@ public class LoginServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
-        
+
         /* TODO: Check when user is already logged in and forward him to the index page or where ever he came from */
-        if(session.getAttribute("user") != null) {
+        if (session.getAttribute("user") != null) {
             response.sendRedirect("index.jsp");
             return;
         }
@@ -98,26 +101,10 @@ public class LoginServlet extends HttpServlet {
             return;
         }
 
-        //get user
-        List<User> users = userFacade.findAll();
-        User user = null;
+        User u = userHelper.login(email, password);
 
-        Boolean found = false;
-
-        for (User u : users) {
-            if (u.getEmail().equals(email)) {
-                user = u;
-            }
-        }
-
-        if (user == null) {
-            found = false;
-        } else {
-            found = BCrypt.checkpw(password, user.getPassword());
-        }
-
-        if (found) {
-            request.getSession().setAttribute("user", user);
+        if (u != null) {
+            request.getSession().setAttribute("user", u);
 
             response.sendRedirect("index.jsp");
         } else {

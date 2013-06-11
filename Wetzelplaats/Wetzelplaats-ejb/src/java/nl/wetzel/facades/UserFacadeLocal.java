@@ -28,5 +28,7 @@ public interface UserFacadeLocal {
     List<User> findRange(int[] range);
 
     int count();
+
+    public User getUser(String email);
     
 }
