@@ -29,10 +29,6 @@ public class AdvertisementCreateServlet extends HttpServlet {
 
     @EJB
     private AdvertisementHelper advertisementHelper;
-    
-    @EJB
-    private AdvertisementFacadeLocal adFacade;
-    
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -73,7 +69,6 @@ public class AdvertisementCreateServlet extends HttpServlet {
         Long price = 0L;
         HttpSession session = request.getSession();
         ArrayList<String> errors = new ArrayList<String>();
-        advertisementHelper.setAdLocal(adFacade);
 
         if (title.isEmpty()) {
             errors.add("Provide a title");
@@ -93,13 +88,12 @@ public class AdvertisementCreateServlet extends HttpServlet {
         }
 
         if (errors.size() > 0) {
-            request.setAttribute("error", errors);
-            setValues(title, description, priceStr, request, response);
+            setValues(title, description, priceStr, request, response, errors);
         } else {
             try {
-                advertisementHelper.createAdvertisement(title, description, price, (User)session.getAttribute("user"));
+                advertisementHelper.createAdvertisement(title, description, price, (User) session.getAttribute("user"));
 
-                request.setAttribute("created", true);
+                request.getSession().setAttribute("created", true);
                 response.sendRedirect("/Wetzelplaats-war/ad/create");
             } catch (RuntimeException e) {
                 Throwable t = e.getCause();
@@ -110,7 +104,7 @@ public class AdvertisementCreateServlet extends HttpServlet {
                 } else {
                     errors.add("Something went wrong. Please contact support");
                 }
-                setValues(title, description, priceStr, request, response);
+                setValues(title, description, priceStr, request, response, errors);
             }
         }
     }
@@ -125,7 +119,8 @@ public class AdvertisementCreateServlet extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-    private void setValues(String title, String description, String priceStr, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    private void setValues(String title, String description, String priceStr, HttpServletRequest request, HttpServletResponse response, ArrayList<String> errors) throws ServletException, IOException {
+        request.setAttribute("errors", errors);
         request.setAttribute("title", title);
         request.setAttribute("description", description);
         request.setAttribute("price", priceStr);

@@ -23,14 +23,14 @@ import nl.wetzel.facades.AdvertisementFacadeLocal;
 @Stateless
 @LocalBean
 public class AdvertisementHelper {
-    
+
     @EJB
-    private AdvertisementFacadeLocal adLocal;    
+    private AdvertisementFacadeLocal adLocal;
 
     //<editor-fold defaultstate="collapsed" desc="constructors">
     public AdvertisementHelper() {
     }
-    
+
     public AdvertisementHelper(AdvertisementFacade adLocal) {
         this.adLocal = adLocal;
     }
@@ -43,19 +43,19 @@ public class AdvertisementHelper {
 
         //check for duplicate title
 //        try {
-            Advertisement duplicate = getAdLocal().findByTitle(title);
-            
-            if (duplicate != null) {
-                throw new DuplicateEntityException("Advertisement already exists");
-            } else {
-                //TODO define ePriceType
-                Advertisement a = new Advertisement(0, title, description, price, false, 1);
-                a.setUserId(user);
-                a.setBidCollection(new ArrayList<Bid>());
-                                
-                getAdLocal().create(a);
-                return a;
-            }
+        Advertisement duplicate = adLocal.findByTitle(title);
+
+        if (duplicate != null) {
+            throw new DuplicateEntityException("Advertisement already exists");
+        } else {
+            //TODO define ePriceType
+            Advertisement a = new Advertisement(0, title, description, price, false, 1);
+            a.setUserId(user);
+            a.setBidCollection(new ArrayList<Bid>());
+
+            adLocal.create(a);
+            return a;
+        }
 //        } catch (RuntimeException e) {
 //            
 //            
@@ -70,12 +70,8 @@ public class AdvertisementHelper {
     public void setAdLocal(AdvertisementFacadeLocal adLocal) {
         this.adLocal = adLocal;
     }
-    
-    public AdvertisementFacadeLocal getAdLocal() {
-        if (this.adLocal == null) {
-            this.adLocal = new AdvertisementFacade();
-        }
-        
+
+    public AdvertisementFacadeLocal getAdLocal() {        
         return this.adLocal;
     }
     //</editor-fold>

@@ -3,14 +3,14 @@
     <h2>Create an advertisement!</h2>
     <form action="/Wetzelplaats-war/ad/create" method="POST">
         <c:if test="${created}">
-            <div class="message succes">
+            <div class="message success">
                 Successfully created the advertisement. <a href="/Wetzelplaats-war/index">Click here</a> to return to the home page.
             </div>
         </c:if>
-        <c:if test="${error != null}">
+        <c:if test="${errors != null}">
             <div class="message error">
                 <ul>
-                    <c:forEach var="e" items="${error}">
+                    <c:forEach var="e" items="${errors}">
                         <li><c:out value="${e}"/></li>
                         </c:forEach>
                 </ul>

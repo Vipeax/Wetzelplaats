@@ -75,10 +75,6 @@ public class UserHelper {
     }
 
     public UserFacadeLocal getUserFacade() {
-        if (userFacade == null) {
-            userFacade = new UserFacade();
-        }
-
         return userFacade;
     }
     //</editor-fold>

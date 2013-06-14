@@ -91,10 +91,10 @@ root {
     background-color: #f09393;
 }
 
-.loginBox .message.success {
+.loginBox .message.success, .create .message.success {
     background-color: #57f149;
 }
-
+    
 .loginBox .error ul, .loginBox .success ul, .create .error ul {
     padding-left:30px;
 }
