@@ -1,0 +1,101 @@
+/* 
+    Document   : style
+    Created on : Jun 6, 2013, 9:00:55 PM
+    Author     : Timo
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif, serif;
+}
+
+root { 
+    display: block;
+}
+
+.header {
+    background-color: #9c9999;
+    border-style: solid;
+    border-width: 0 0 1px 0;
+    min-height:100px;
+}
+
+.header h2 {
+    color: #fff;
+    padding: 30px 0 0 20px;
+    font-size: 200%;
+}
+
+.header .login {
+    float:right;
+    padding: 0 10px 0 0;
+}
+
+.container {
+    width: 1000px;
+    border: 1px solid #010000;
+    margin: 100px auto;
+    min-height: 500px;
+}
+
+.main {
+    padding: 20px;
+}
+
+/*=======================*/
+/* INDEX                 */
+/*=======================*/
+.action-menu {
+    border:1px solid #010000;
+    min-height:20px;
+    margin:0;
+    padding:0;
+}
+
+.ad-container {
+    border:1px solid #010000;
+    min-height:200px;
+    margin:20px 0 0 0;
+}
+
+/*=======================*/
+/* LOGIN / CREATE        */
+/*=======================*/
+
+.loginBox {
+    width: 500px;
+    margin: 200px auto;
+    border: 1px solid #010000;
+}
+
+.loginBox form > div, .loginBox h2, .create form > div {
+    padding: 10px 10px;
+}
+
+.loginBox form > div > label, .create form > div > label {
+    display: inline-block;
+    width:150px;
+}
+
+.loginBox .message, .create .message {
+    border: 1px solid #010000;
+    width: 350px;
+    margin: 5px auto;
+    padding: 10px;
+}
+
+.loginBox .message.error, .create .message.error {
+    background-color: #f09393;
+}
+
+.loginBox .message.success {
+    background-color: #57f149;
+}
+
+.loginBox .error ul, .loginBox .success ul, .create .error ul {
+    padding-left:30px;
+}
+
