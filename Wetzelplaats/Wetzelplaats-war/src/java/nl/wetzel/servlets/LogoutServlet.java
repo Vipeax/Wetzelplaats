@@ -33,14 +33,14 @@ public class LogoutServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-      HttpSession session = request.getSession(false);
-      
-      if(session != null) {
-          session.invalidate();
-          response.sendRedirect("index.jsp");
-          Principal userName = request.getUserPrincipal();
-          
-      }
+        HttpSession session = request.getSession(false);
+
+        if (session != null) {
+            session.invalidate();
+            response.sendRedirect("index");
+            Principal userName = request.getUserPrincipal();
+
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

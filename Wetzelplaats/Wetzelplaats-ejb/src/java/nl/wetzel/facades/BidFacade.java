@@ -15,6 +15,7 @@ import nl.wetzel.entities.Bid;
  */
 @Stateless
 public class BidFacade extends AbstractFacade<Bid> implements BidFacadeLocal {
+
     @PersistenceContext(unitName = "Wetzelplaats-ejbPU")
     private EntityManager em;
 
@@ -26,5 +27,4 @@ public class BidFacade extends AbstractFacade<Bid> implements BidFacadeLocal {
     public BidFacade() {
         super(Bid.class);
     }
-    
 }

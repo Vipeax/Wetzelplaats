@@ -6,7 +6,7 @@
             <ul>
                 <c:forEach var="e" items="${error}">
                     <li><c:out value="${e}"/></li>
-                </c:forEach>
+                    </c:forEach>
             </ul>
         </div>
     </c:if>

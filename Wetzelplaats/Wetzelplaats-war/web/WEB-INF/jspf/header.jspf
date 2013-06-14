@@ -14,10 +14,10 @@
                 <div class="login">
                     <c:choose>
                         <c:when test="${user == null}">
-                            <a href="/Wetzelplaats-war/login">login</a> or <a href="register">register</a>
+                            <a href="/Wetzelplaats-war/login">login</a> or <a href="/Wetzelplaats-war/register">register</a>
                         </c:when>
                         <c:otherwise>
-                            Welcome, ${user.firstname}! <a href="logout">logout</a>
+                            Welcome, ${user.firstname}! <a href="/Wetzelplaats-war/logout">logout</a>
                         </c:otherwise>
                     </c:choose>
 

@@ -28,5 +28,4 @@ public interface BidFacadeLocal {
     List<Bid> findRange(int[] range);
 
     int count();
-    
 }

@@ -6,8 +6,15 @@ package nl.wetzel.tests;
 
 import com.internet.custom.BCrypt;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import nl.wetzel.entities.User;
+import nl.wetzel.exception.DuplicateEntityException;
+import nl.wetzel.facades.UserFacade;
 import nl.wetzel.facades.UserFacadeLocal;
 import nl.wetzel.helpers.UserHelper;
 import org.junit.Before;
@@ -21,7 +28,6 @@ import static org.mockito.Mockito.*;
  * @author Timo
  */
 public class TestUser {
-
     @EJB
     private UserHelper helper;
     private UserFacadeLocal localMock;
@@ -33,7 +39,7 @@ public class TestUser {
     private String firstname = "Timo";
     private String lastname = "Hermans";
     private List<Integer> userCount;
-
+    
     public TestUser() {
     }
 
@@ -56,7 +62,7 @@ public class TestUser {
         helper = new UserHelper();
         helper.setUserFacade(localMock);
     }
-
+    
     @Test
     public void testLoginCorrect() {
         when(localMock.getUser(rightEmail)).thenReturn(u);
@@ -119,7 +125,7 @@ public class TestUser {
         assertEquals(null, created);
     }
 
-    @Test
+    @Test(expected = DuplicateEntityException.class)
     public void testRegisterExistingUser() {
         User createdFirst = helper.Register(firstname, lastname, rightEmail, rightPassword);
 
@@ -129,8 +135,6 @@ public class TestUser {
         User createdSecond = helper.Register(firstname, lastname, rightEmail, rightPassword);
 
         verify(localMock, times(1)).create(u);
-        assertEquals(u, createdFirst);
-        assertEquals(null, createdSecond);
     }
 
     @Test

@@ -62,7 +62,7 @@ root {
 }
 
 /*=======================*/
-/* LOGIN                 */
+/* LOGIN / CREATE        */
 /*=======================*/
 
 .loginBox {
@@ -71,23 +71,23 @@ root {
     border: 1px solid #010000;
 }
 
-.loginBox form > div, .loginBox h2 {
+.loginBox form > div, .loginBox h2, .create form > div {
     padding: 10px 10px;
 }
 
-.loginBox form > div > label {
+.loginBox form > div > label, .create form > div > label {
     display: inline-block;
     width:150px;
 }
 
-.loginBox .message {
+.loginBox .message, .create .message {
     border: 1px solid #010000;
     width: 350px;
     margin: 5px auto;
     padding: 10px;
 }
 
-.loginBox .message.error {
+.loginBox .message.error, .create .message.error {
     background-color: #f09393;
 }
 
@@ -95,7 +95,7 @@ root {
     background-color: #57f149;
 }
 
-.loginBox .error ul, .loginBox .success ul {
+.loginBox .error ul, .loginBox .success ul, .create .error ul {
     padding-left:30px;
 }
 

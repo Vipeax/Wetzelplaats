@@ -23,6 +23,8 @@ public interface AdvertisementFacadeLocal {
 
     Advertisement find(Object id);
 
+    Advertisement findByTitle(String title);
+
     List<Advertisement> findAll();
 
     List<Advertisement> findRange(int[] range);

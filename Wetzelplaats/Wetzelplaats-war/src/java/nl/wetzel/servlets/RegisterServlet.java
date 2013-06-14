@@ -16,7 +16,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import nl.wetzel.entities.User;
+import nl.wetzel.exception.DuplicateEntityException;
 import nl.wetzel.facades.UserFacadeLocal;
+import nl.wetzel.helpers.UserHelper;
 
 /**
  *
@@ -24,9 +26,9 @@ import nl.wetzel.facades.UserFacadeLocal;
  */
 @WebServlet(name = "RegisterServlet", urlPatterns = {"/register"})
 public class RegisterServlet extends HttpServlet {
-    
+
     @EJB
-    private UserFacadeLocal userFacade;
+    private UserHelper userHelper;
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -62,7 +64,7 @@ public class RegisterServlet extends HttpServlet {
         String email = request.getParameter("txtEmail");
         String password = request.getParameter("txtPassword");
         String password2 = request.getParameter("txtPassword2");
-        
+
         ArrayList<String> errors = new ArrayList<String>();
         //error check
         if (firstname.isEmpty()) {
@@ -83,7 +85,7 @@ public class RegisterServlet extends HttpServlet {
         if (!password.isEmpty() && !password2.isEmpty() && !password.equals(password2)) {
             errors.add("Passwords do not match");
         }
-        
+
         if (errors.size() > 0) {
             showError(request, response, firstname, lastname, email, password, password2, errors);
             return;
@@ -92,18 +94,26 @@ public class RegisterServlet extends HttpServlet {
         //hash the password
         String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
 
-//        try {
-        User user = new User(0, firstname, lastname, email, hashedPassword);
-        userFacade.create(user);
+        try {
+            User user = userHelper.Register(firstname, lastname, email, password);
+        } catch (RuntimeException ex) {
+            Throwable t = ex.getCause();
+
+            if (t instanceof DuplicateEntityException) {
+                errors.add(t.getMessage());
+            } else {
+                errors.add("Something went wrong. Please contact support.");
+            }
+            showError(request, response, firstname, lastname, email, password, password2, errors);
+            return;
+        }
 
         request.getSession().setAttribute("registered", true);
-        response.sendRedirect("login");
-        
-        //TODO put user in session
+        response.sendRedirect("/Wetzelplaats-war/login");
 
         //TODO Mail the password to the user
     }
-    
+
     private void showError(HttpServletRequest request, HttpServletResponse response, String firstname, String lastname, String email, String password, String password2, ArrayList<String> errors) throws ServletException, IOException {
         request.setAttribute("firstname", firstname);
         request.setAttribute("lastname", lastname);

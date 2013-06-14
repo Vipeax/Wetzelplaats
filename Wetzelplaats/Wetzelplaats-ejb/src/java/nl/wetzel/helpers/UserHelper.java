@@ -9,6 +9,7 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
 import nl.wetzel.entities.User;
+import nl.wetzel.exception.DuplicateEntityException;
 import nl.wetzel.facades.UserFacade;
 import nl.wetzel.facades.UserFacadeLocal;
 
@@ -54,7 +55,7 @@ public class UserHelper {
         User duplicate = userFacade.getUser(email);
 
         if (duplicate != null) {
-            return null;
+            throw new DuplicateEntityException("User already exists");
         } else {
             User u = new User();
             u.setFirstname(firstname);

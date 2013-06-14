@@ -48,7 +48,7 @@ public class LoginServlet extends HttpServlet {
         HttpSession session = request.getSession();
 
         if (session.getAttribute("user") != null) {
-            response.sendRedirect("index.jsp");
+            response.sendRedirect("/Wetzelplaats-war/index");
             return;
         }
 
@@ -75,6 +75,7 @@ public class LoginServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         Boolean registerSuccess = (Boolean) request.getAttribute("registered");
+        HttpSession session = request.getSession();
 
         if (registerSuccess != null && registerSuccess) {
             doGet(request, response);
@@ -103,9 +104,14 @@ public class LoginServlet extends HttpServlet {
         User u = userHelper.login(email, password);
 
         if (u != null) {
-            request.getSession().setAttribute("user", u);
+            session.setAttribute("user", u);
 
-            response.sendRedirect("index.jsp");
+            if (session.getAttribute("path") == null) {
+                response.sendRedirect("/Wetzelplaats-war/login");
+            } else {
+                response.sendRedirect("/Wetzelplaats-war" + (String) session.getAttribute("path"));
+                session.setAttribute("path", null);
+            }
         } else {
             errors.add("Username/password not found");
             request.setAttribute("error", errors);

@@ -43,7 +43,7 @@ public class UserFacade extends AbstractFacade<User> implements UserFacadeLocal 
         } catch (RuntimeException e) {
             //we now it can be several exceptions, but because we know it failed, return null            
             return null;
-            
+
             //what you could do however, is log the exception that is not common
         }
     }
