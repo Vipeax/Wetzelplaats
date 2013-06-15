@@ -36,8 +36,8 @@ public class AdvertisementHelper {
     }
     //</editor-fold>
 
-    public Advertisement createAdvertisement(String title, String description, Long price, User user) {
-        if (title == null || description == null || price == null) {
+    public Advertisement createAdvertisement(String title, String description, double price, User user) {
+        if (title == null || description == null) {
             return null;
         }
 

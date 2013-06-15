@@ -41,6 +41,10 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Advertisement.findByEPriceType", query = "SELECT a FROM Advertisement a WHERE a.ePriceType = :ePriceType")})
 public class Advertisement implements Serializable {
 
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "price")
+    private double price;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -57,10 +61,6 @@ public class Advertisement implements Serializable {
     @Size(min = 1, max = 999)
     @Column(name = "description")
     private String description;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "price")
-    private long price;
     @Basic(optional = false)
     @NotNull
     @Column(name = "isSold")
@@ -82,7 +82,7 @@ public class Advertisement implements Serializable {
         this.id = id;
     }
 
-    public Advertisement(Integer id, String name, String description, long price, boolean isSold, int ePriceType) {
+    public Advertisement(Integer id, String name, String description, double price, boolean isSold, int ePriceType) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -113,14 +113,6 @@ public class Advertisement implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public long getPrice() {
-        return price;
-    }
-
-    public void setPrice(long price) {
-        this.price = price;
     }
 
     public boolean getIsSold() {
@@ -179,5 +171,13 @@ public class Advertisement implements Serializable {
     @Override
     public String toString() {
         return "nl.wetzel.entities.Advertisement[ id=" + id + " ]";
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
     }
 }

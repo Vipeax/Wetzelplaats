@@ -6,6 +6,7 @@ package nl.wetzel.servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Collections;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.convert.Converter;
@@ -42,12 +43,13 @@ public class IndexServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         //try get pageIndex from queryString
-        Integer pageIndex = Convert.tryParseInt((String) request.getAttribute("p"));
+        Integer pageIndex = Convert.tryParseInt((String) request.getParameter("p"));
         int adCount = advertisementFacade.count();
 
-        //amount = 10 because it's nice to have 10 ads on the page
-        List<Advertisement> ads = advertisementFacade.findByLimit(pageIndex, 10);
-
+        //amount = 4 because it's nice to have 4 ads on the page
+        List<Advertisement> ads = advertisementFacade.findByLimit(pageIndex, 4);
+        
+        request.setAttribute("p", pageIndex);
         request.setAttribute("adCount", adCount);
         request.setAttribute("ads", ads);
 
@@ -55,7 +57,7 @@ public class IndexServlet extends HttpServlet {
     }
 
     /**
-     * Handles the HTTP
+     * Handesl the HTTP
      * <code>POST</code> method.
      *
      * @param request servlet request

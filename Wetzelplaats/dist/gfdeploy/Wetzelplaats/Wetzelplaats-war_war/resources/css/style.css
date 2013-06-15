@@ -16,6 +16,18 @@ root {
     display: block;
 }
 
+.clear {
+    clear:both;
+}
+
+.fll {
+    float:left;
+}
+
+.flr {
+    float:right;
+}
+
 .header {
     background-color: #9c9999;
     border-style: solid;
@@ -61,6 +73,43 @@ root {
     margin:20px 0 0 0;
 }
 
+.ad-container .paging {
+    width:100px;
+    margin: 0 auto;
+}
+
+.adv-block {
+    border: 1px solid #000;
+    width:225px;
+    min-height:205px;
+    position: relative;
+    background-color:#ffff66;
+}
+
+.adv-block h3  {
+    text-align: center;
+}
+
+.adv-block a {
+    color: #000000;
+}
+
+.adv-block > p, .adv-block , .adv-block .picture, .adv-block .description, .adv-block .price {
+    margin:10px 5px;
+}
+
+.adv-block .price {
+    width:98%;
+    position:absolute;
+    bottom:0;
+}
+.adv-block .picture {
+    width:50px;
+    height: 50px;
+    margin: 0 auto;
+    border: 1px solid black;
+}
+
 /*=======================*/
 /* LOGIN / CREATE        */
 /*=======================*/
@@ -91,7 +140,7 @@ root {
     background-color: #f09393;
 }
 
-.loginBox .message.success {
+.loginBox .message.success, .create .message.success {
     background-color: #57f149;
 }
 

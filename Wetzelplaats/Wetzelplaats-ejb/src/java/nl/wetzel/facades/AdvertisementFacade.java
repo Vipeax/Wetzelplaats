@@ -4,6 +4,7 @@
  */
 package nl.wetzel.facades;
 
+import java.util.Collections;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -36,9 +37,14 @@ public class AdvertisementFacade extends AbstractFacade<Advertisement> implement
 
         Query q = em.createNamedQuery("Advertisement.findAll", Advertisement.class);
         q.setMaxResults(amount);
-        q.setFirstResult(pageIndex);
+        q.setFirstResult(pageIndex * amount);
 
         result = q.getResultList();
+        
+        //make sure the highest bid is on top
+        for (Advertisement advertisement : result) {
+            Collections.sort((List)advertisement.getBidCollection(), new nl.wetzel.custom.CustomBidComparer());
+        }
 
         return result;
     }
