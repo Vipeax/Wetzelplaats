@@ -26,4 +26,20 @@ public class Convert {
         }
         return result;
     }
+
+    /**
+     * Tries to parse double.
+     * @param String value the string to parse
+     * @return return double. On fail, returns 0
+     */
+    public static Double tryParseDouble(String value) {
+        double result;
+
+        try {
+            result = Double.parseDouble(value);
+        } catch (Exception e) {
+            result = 0;
+        }
+        return result;
+    }
 }

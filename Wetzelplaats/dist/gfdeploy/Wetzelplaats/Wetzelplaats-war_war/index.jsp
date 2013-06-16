@@ -10,7 +10,7 @@
         <c:otherwise>
             <c:forEach var="ad" items="${ads}">
                 <div class="adv-block fll">
-                    <h3><a href="/Wetzelplaats-war/ad?id=${ad.id}">${ad.name}</a></h3>
+                    <h3><a href="/Wetzelplaats-war/ad/view?id=${ad.id}">${ad.name}</a></h3>
 
                     <div class="picture"></div>
 
@@ -40,7 +40,7 @@
                                         N.A.
                                     </c:when>
                                     <c:otherwise>
-                                        $${ad.bidCollection[0]}
+                                        $${ad.bidCollection.get(0).price}
                                     </c:otherwise>
                                 </c:choose>
                             </p>

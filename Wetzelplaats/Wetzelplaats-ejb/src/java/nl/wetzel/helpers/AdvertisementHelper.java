@@ -66,12 +66,22 @@ public class AdvertisementHelper {
 //        }
     }
 
+    public Advertisement addBid(Advertisement ad, Bid bid) {
+        List<Bid> bidCollection = (List) ad.getBidCollection();
+
+        bidCollection.add(0, bid);
+        ad.setBidCollection(bidCollection);
+
+        adLocal.edit(ad);
+        return ad;
+    }
+
     //<editor-fold defaultstate="collapsed" desc="Getters/setters">
     public void setAdLocal(AdvertisementFacadeLocal adLocal) {
         this.adLocal = adLocal;
     }
 
-    public AdvertisementFacadeLocal getAdLocal() {        
+    public AdvertisementFacadeLocal getAdLocal() {
         return this.adLocal;
     }
     //</editor-fold>

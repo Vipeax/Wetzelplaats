@@ -4,9 +4,12 @@
  */
 package nl.wetzel.facades;
 
+import java.util.Collections;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import nl.wetzel.entities.Bid;
 
 /**
@@ -26,5 +29,14 @@ public class BidFacade extends AbstractFacade<Bid> implements BidFacadeLocal {
 
     public BidFacade() {
         super(Bid.class);
+    }
+
+    @Override
+    public List<Bid> findByAdvertisementId(int advertisementId) {
+        
+        Query q = em.createNamedQuery("Bid.findByAdvertisementId");
+        q.setParameter("advertisementId", advertisementId);
+        
+        return q.getResultList();
     }
 }

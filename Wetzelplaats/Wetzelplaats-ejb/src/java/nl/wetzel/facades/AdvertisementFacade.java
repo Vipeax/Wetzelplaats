@@ -4,6 +4,7 @@
  */
 package nl.wetzel.facades;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -11,6 +12,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import nl.wetzel.entities.Advertisement;
+import nl.wetzel.entities.Bid;
 
 /**
  *
@@ -39,13 +41,8 @@ public class AdvertisementFacade extends AbstractFacade<Advertisement> implement
         q.setMaxResults(amount);
         q.setFirstResult(pageIndex * amount);
 
-        result = q.getResultList();
-        
-        //make sure the highest bid is on top
-        for (Advertisement advertisement : result) {
-            Collections.sort((List)advertisement.getBidCollection(), new nl.wetzel.custom.CustomBidComparer());
-        }
-
+        result = q.getResultList();       
+     
         return result;
     }
 
@@ -62,5 +59,5 @@ public class AdvertisementFacade extends AbstractFacade<Advertisement> implement
 
             //what you could do however, is log the exception that is not common
         }
-    }
+    }    
 }
