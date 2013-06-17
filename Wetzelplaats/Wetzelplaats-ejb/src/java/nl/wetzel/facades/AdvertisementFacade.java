@@ -4,12 +4,15 @@
  */
 package nl.wetzel.facades;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import nl.wetzel.entities.Advertisement;
+import nl.wetzel.entities.Bid;
 
 /**
  *
@@ -36,10 +39,10 @@ public class AdvertisementFacade extends AbstractFacade<Advertisement> implement
 
         Query q = em.createNamedQuery("Advertisement.findAll", Advertisement.class);
         q.setMaxResults(amount);
-        q.setFirstResult(pageIndex);
+        q.setFirstResult(pageIndex * amount);
 
-        result = q.getResultList();
-
+        result = q.getResultList();       
+     
         return result;
     }
 
@@ -56,5 +59,5 @@ public class AdvertisementFacade extends AbstractFacade<Advertisement> implement
 
             //what you could do however, is log the exception that is not common
         }
-    }
+    }    
 }

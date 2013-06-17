@@ -36,8 +36,8 @@ public class AdvertisementHelper {
     }
     //</editor-fold>
 
-    public Advertisement createAdvertisement(String title, String description, Long price, User user) {
-        if (title == null || description == null || price == null) {
+    public Advertisement createAdvertisement(String title, String description, double price, User user) {
+        if (title == null || description == null) {
             return null;
         }
 
@@ -66,12 +66,22 @@ public class AdvertisementHelper {
 //        }
     }
 
+    public Advertisement addBid(Advertisement ad, Bid bid) {
+        List<Bid> bidCollection = (List) ad.getBidCollection();
+
+        bidCollection.add(0, bid);
+        ad.setBidCollection(bidCollection);
+
+        adLocal.edit(ad);
+        return ad;
+    }
+
     //<editor-fold defaultstate="collapsed" desc="Getters/setters">
     public void setAdLocal(AdvertisementFacadeLocal adLocal) {
         this.adLocal = adLocal;
     }
 
-    public AdvertisementFacadeLocal getAdLocal() {        
+    public AdvertisementFacadeLocal getAdLocal() {
         return this.adLocal;
     }
     //</editor-fold>

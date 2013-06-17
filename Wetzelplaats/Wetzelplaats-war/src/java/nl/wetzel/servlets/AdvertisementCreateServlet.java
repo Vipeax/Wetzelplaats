@@ -66,7 +66,7 @@ public class AdvertisementCreateServlet extends HttpServlet {
         String title = request.getParameter("txtTitle");
         String description = request.getParameter("txtDescription");
         String priceStr = request.getParameter("txtPrice");
-        Long price = 0L;
+        double price = 0;
         HttpSession session = request.getSession();
         ArrayList<String> errors = new ArrayList<String>();
 
@@ -81,9 +81,9 @@ public class AdvertisementCreateServlet extends HttpServlet {
         } else {
             //try parse the string to a double
             try {
-                price = Long.parseLong(priceStr);
+                price = Double.parseDouble(priceStr);
             } catch (RuntimeException e) {
-                errors.add("Enter a valid value");
+                errors.add("Enter a valid pirce, e.g. 123.12");
             }
         }
 
