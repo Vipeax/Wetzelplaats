@@ -6,7 +6,10 @@ package nl.wetzel.facades;
 
 import java.util.List;
 import javax.ejb.Local;
+import javax.persistence.EntityManager;
+import nl.wetzel.entities.Advertisement;
 import nl.wetzel.entities.Bid;
+import nl.wetzel.entities.User;
 
 /**
  *
@@ -30,4 +33,10 @@ public interface BidFacadeLocal {
     List<Bid> findByAdvertisementId(int advertisementId);
 
     int count();
+
+    public Bid createBid(double price, User user, Advertisement ad);
+
+    public void setEm(EntityManager em);
+
+    public void setAdvertisementFacade(AdvertisementFacadeLocal advertisementFacade);
 }

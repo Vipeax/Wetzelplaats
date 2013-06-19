@@ -6,6 +6,7 @@ package nl.wetzel.facades;
 
 import java.util.List;
 import javax.ejb.Local;
+import javax.persistence.EntityManager;
 import nl.wetzel.entities.User;
 
 /**
@@ -29,5 +30,7 @@ public interface UserFacadeLocal {
 
     int count();
 
-    public User getUser(String email);
+    public User findByEmail(String email);
+
+    public void setEm(EntityManager em);
 }

@@ -18,8 +18,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import nl.wetzel.entities.User;
+import nl.wetzel.facades.UserFacade;
 import nl.wetzel.facades.UserFacadeLocal;
-import nl.wetzel.helpers.UserHelper;
 
 /**
  *
@@ -30,7 +30,7 @@ public class LoginServlet extends HttpServlet {
 
     @EJB
 //    private UserFacadeLocal userFacade;
-    private UserHelper userHelper;
+    private UserFacade userHelper;
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**

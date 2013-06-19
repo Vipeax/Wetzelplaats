@@ -6,7 +6,6 @@ package nl.wetzel.servlets;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -19,7 +18,7 @@ import nl.wetzel.entities.Advertisement;
 import nl.wetzel.entities.Bid;
 import nl.wetzel.entities.User;
 import nl.wetzel.facades.AdvertisementFacadeLocal;
-import nl.wetzel.helpers.BidHelper;
+import nl.wetzel.facades.BidFacadeLocal;
 
 /**
  *
@@ -29,7 +28,7 @@ import nl.wetzel.helpers.BidHelper;
 public class AdvertisementServlet extends HttpServlet {
 
     @EJB
-    private BidHelper bidHelper;
+    private BidFacadeLocal bidFacade;
     @EJB
     private AdvertisementFacadeLocal advertisementFacade;
 
@@ -56,7 +55,7 @@ public class AdvertisementServlet extends HttpServlet {
 
         Advertisement ad = advertisementFacade.find(adId);
 //        //        List<Bid> bidCollection = bidHelper.getBidFacade().findByAdvertisementId(adId);
-        List<Bid> bidCollection = (List)ad.getBidCollection();
+        List<Bid> bidCollection = (List) ad.getBidCollection();
 
         request.setAttribute("ad", ad);
         request.setAttribute("ad.bidCollection", bidCollection);
@@ -96,7 +95,7 @@ public class AdvertisementServlet extends HttpServlet {
         if (price == 0 || price <= highestBid) {
             errors.add("Price must be higher than 0 or the current highest bid.");
         } else {
-            Bid bid = bidHelper.createBid(price, user, ad);
+            Bid bid = bidFacade.createBid(price, user, ad);
 
             if (bid == null) {
                 errors.add("uh oh! Something went wrong.");

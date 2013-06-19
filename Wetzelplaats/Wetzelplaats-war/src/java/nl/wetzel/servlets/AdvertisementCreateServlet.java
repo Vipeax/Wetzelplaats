@@ -5,9 +5,7 @@
 package nl.wetzel.servlets;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -18,7 +16,6 @@ import javax.servlet.http.HttpSession;
 import nl.wetzel.entities.User;
 import nl.wetzel.exception.DuplicateEntityException;
 import nl.wetzel.facades.AdvertisementFacadeLocal;
-import nl.wetzel.helpers.AdvertisementHelper;
 
 /**
  *
@@ -28,7 +25,7 @@ import nl.wetzel.helpers.AdvertisementHelper;
 public class AdvertisementCreateServlet extends HttpServlet {
 
     @EJB
-    private AdvertisementHelper advertisementHelper;
+    private AdvertisementFacadeLocal advertisementFacade;
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -91,7 +88,7 @@ public class AdvertisementCreateServlet extends HttpServlet {
             setValues(title, description, priceStr, request, response, errors);
         } else {
             try {
-                advertisementHelper.createAdvertisement(title, description, price, (User) session.getAttribute("user"));
+                advertisementFacade.createAdvertisement(title, description, price, (User) session.getAttribute("user"));
 
                 request.getSession().setAttribute("created", true);
                 response.sendRedirect("/Wetzelplaats-war/ad/create");

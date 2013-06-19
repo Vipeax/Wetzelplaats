@@ -17,8 +17,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import nl.wetzel.entities.User;
 import nl.wetzel.exception.DuplicateEntityException;
+import nl.wetzel.facades.UserFacade;
 import nl.wetzel.facades.UserFacadeLocal;
-import nl.wetzel.helpers.UserHelper;
 
 /**
  *
@@ -28,7 +28,7 @@ import nl.wetzel.helpers.UserHelper;
 public class RegisterServlet extends HttpServlet {
 
     @EJB
-    private UserHelper userHelper;
+    private UserFacade userHelper;
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
