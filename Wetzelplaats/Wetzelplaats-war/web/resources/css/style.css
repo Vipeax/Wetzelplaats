@@ -82,9 +82,8 @@ i.less {
     margin:20px 0 0 0;
 }
 
-.ad-container .paging {
-    width:100px;
-    margin: 0 auto;
+.paging {
+    text-align:center;
 }
 
 .adv-block {
