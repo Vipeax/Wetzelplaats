@@ -91,9 +91,6 @@ public class RegisterServlet extends HttpServlet {
             return;
         }
 
-        //hash the password
-        String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
-
         try {
             User user = userHelper.Register(firstname, lastname, email, password);
         } catch (RuntimeException ex) {

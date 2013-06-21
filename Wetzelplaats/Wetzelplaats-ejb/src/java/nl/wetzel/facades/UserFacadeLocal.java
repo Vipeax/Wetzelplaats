@@ -33,4 +33,8 @@ public interface UserFacadeLocal {
     public User findByEmail(String email);
 
     public void setEm(EntityManager em);
+
+    public User Register(String firstname, String lastname, String email, String password);
+
+    public User login(String email, String password);
 }

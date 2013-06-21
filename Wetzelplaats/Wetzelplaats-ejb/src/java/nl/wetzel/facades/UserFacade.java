@@ -29,6 +29,7 @@ public class UserFacade extends AbstractFacade<User> implements UserFacadeLocal 
         super(User.class);
     }
 
+    @Override
     public User login(String email, String password) {
         User u = findByEmail(email);
 
@@ -41,6 +42,7 @@ public class UserFacade extends AbstractFacade<User> implements UserFacadeLocal 
         return u;
     }
 
+    @Override
     public User Register(String firstname, String lastname, String email, String password) {
         //check if data complete
         if (firstname == null || lastname == null || email == null || password == null) {

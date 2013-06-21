@@ -29,8 +29,7 @@ import nl.wetzel.facades.UserFacadeLocal;
 public class LoginServlet extends HttpServlet {
 
     @EJB
-//    private UserFacadeLocal userFacade;
-    private UserFacade userHelper;
+    private UserFacadeLocal userHelper;
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
