@@ -22,7 +22,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Timo
  */
-@WebFilter(filterName = "LoginFilter", urlPatterns = {"/ad/create"})
+@WebFilter(filterName = "LoginFilter", urlPatterns = {"/ad/*"})
 public class LoginFilter implements Filter {
 
     /**
@@ -42,8 +42,13 @@ public class LoginFilter implements Filter {
         HttpServletResponse httpResponse = (HttpServletResponse) response;
 
         if (httpRequest.getSession().getAttribute("user") == null) {
-            //save the request path
-            httpRequest.getSession().setAttribute("path", httpRequest.getServletPath());
+
+            if (httpRequest.getQueryString() == null) {
+                //save the request path            
+                httpRequest.getSession().setAttribute("path", httpRequest.getServletPath());
+            } else {
+                httpRequest.getSession().setAttribute("path", httpRequest.getServletPath() + "?" + httpRequest.getQueryString());
+            }
 
             httpResponse.sendRedirect("/Wetzelplaats-war/login");
         } else {

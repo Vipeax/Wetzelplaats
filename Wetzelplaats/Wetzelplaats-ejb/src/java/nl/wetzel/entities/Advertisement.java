@@ -18,6 +18,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -41,6 +42,10 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Advertisement.findByEPriceType", query = "SELECT a FROM Advertisement a WHERE a.ePriceType = :ePriceType")})
 public class Advertisement implements Serializable {
 
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "price")
+    private double price;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -59,10 +64,6 @@ public class Advertisement implements Serializable {
     private String description;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "price")
-    private long price;
-    @Basic(optional = false)
-    @NotNull
     @Column(name = "isSold")
     private boolean isSold;
     @Basic(optional = false)
@@ -73,6 +74,7 @@ public class Advertisement implements Serializable {
     @ManyToOne(optional = false)
     private User userId;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "advertisementId")
+    @OrderBy("price DESC")
     private Collection<Bid> bidCollection;
 
     public Advertisement() {
@@ -82,7 +84,7 @@ public class Advertisement implements Serializable {
         this.id = id;
     }
 
-    public Advertisement(Integer id, String name, String description, long price, boolean isSold, int ePriceType) {
+    public Advertisement(Integer id, String name, String description, double price, boolean isSold, int ePriceType) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -113,14 +115,6 @@ public class Advertisement implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public long getPrice() {
-        return price;
-    }
-
-    public void setPrice(long price) {
-        this.price = price;
     }
 
     public boolean getIsSold() {
@@ -179,5 +173,13 @@ public class Advertisement implements Serializable {
     @Override
     public String toString() {
         return "nl.wetzel.entities.Advertisement[ id=" + id + " ]";
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
     }
 }

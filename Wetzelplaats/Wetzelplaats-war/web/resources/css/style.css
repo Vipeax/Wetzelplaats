@@ -16,6 +16,22 @@ root {
     display: block;
 }
 
+.clear {
+    clear:both;
+}
+
+i.less {
+    font-size: 80%;
+}
+
+.fll {
+    float:left;
+}
+
+.flr {
+    float:right;
+}
+
 .header {
     background-color: #9c9999;
     border-style: solid;
@@ -27,6 +43,11 @@ root {
     color: #fff;
     padding: 30px 0 0 20px;
     font-size: 200%;
+}
+
+.header h2 a {
+    text-decoration: none;
+    color:#fff;
 }
 
 .header .login {
@@ -61,6 +82,46 @@ root {
     margin:20px 0 0 0;
 }
 
+.paging {
+    text-align:center;
+}
+
+.adv-block {
+    border: 1px solid #000;
+    width:225px;
+    min-height:205px;
+    position: relative;
+    background-color:#ffff66;
+}
+
+.adv-block h3  {
+    text-align: center;
+}
+
+.adv-block a {
+    color: #000000;
+}
+
+.adv-block > p, .adv-block , .adv-block .picture, .adv-block .description, .adv-block .price, .adv-block .user {
+    margin:10px 5px;
+}
+
+.adv-block .price {
+    width:98%;
+    position:absolute;
+    bottom:0;
+}
+.adv-block .picture {
+    width:50px;
+    height: 50px;
+    margin: 0 auto;
+    border: 1px solid black;    
+}
+
+.adv-block .description {
+    margin-bottom:60px; /*THIS IS MENDATORY FOR PUSHING THE POSITION:ABSOLUTE OF PRICE DOWN */
+}
+
 /*=======================*/
 /* LOGIN / CREATE        */
 /*=======================*/
@@ -80,22 +141,51 @@ root {
     width:150px;
 }
 
-.loginBox .message, .create .message {
+.loginBox .message, .message {
     border: 1px solid #010000;
     width: 350px;
     margin: 5px auto;
     padding: 10px;
 }
 
-.loginBox .message.error, .create .message.error {
+.loginBox .message.error, .message.error {
     background-color: #f09393;
 }
 
-.loginBox .message.success, .create .message.success {
+.loginBox .message.success, .message.success {
     background-color: #57f149;
 }
-    
-.loginBox .error ul, .loginBox .success ul, .create .error ul {
+
+.loginBox .error ul, .loginBox .success ul, .error ul {
     padding-left:30px;
 }
 
+/*=======================*/
+/* ADVERTISEMENT         */
+/*=======================*/
+
+.bid-block {
+    width: 250px;
+    border: 1px solid #000;
+    height: 400px;
+    position:relative;
+}
+
+.bid-block h2 {
+    text-align: center;
+}
+
+.bid-block .bid-container {
+    height: 90%;
+    margin-bottom: 30px;
+}
+
+.bid-block .bid-container ul {
+    padding-left: 30px;
+}
+
+.bid-block .bid-container .bid-add {
+    position: absolute;
+    bottom: 0;
+    margin:5px 10px;
+}

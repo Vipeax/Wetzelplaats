@@ -5,13 +5,16 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Wetzelplaats</title>
-        <link rel="stylesheet" type="text/css" href="/Wetzelplaats-war/resources/css/style.css"
+        <link rel="stylesheet" type="text/css" href="/Wetzelplaats-war/resources/css/bootstrap.min.css"/>
+        <link rel="stylesheet" type="text/css" href="/Wetzelplaats-war/resources/css/newstyle.css"/>
     </head>
     <body>
         <div class="container">
-            <div class="header">
-                <h2><a href="/Wetzelplaats-war/index">Wetzelplaats</a></h2>
-                <div class="login">
+            <div class="row">
+                <div class="span4">
+                    <h2><a href="/Wetzelplaats-war/index">Wetzelplaats</a></h2>
+                </div>
+                <div class="span3 offset7">
                     <c:choose>
                         <c:when test="${user == null}">
                             <a href="/Wetzelplaats-war/login">login</a> or <a href="/Wetzelplaats-war/register">register</a>
@@ -23,4 +26,4 @@
 
                 </div>
             </div>
-            <div class="main">
+            <div class="container">

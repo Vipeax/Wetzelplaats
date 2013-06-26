@@ -28,17 +28,19 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Bid.findAll", query = "SELECT b FROM Bid b"),
     @NamedQuery(name = "Bid.findById", query = "SELECT b FROM Bid b WHERE b.id = :id"),
-    @NamedQuery(name = "Bid.findByPrice", query = "SELECT b FROM Bid b WHERE b.price = :price")})
+    @NamedQuery(name = "Bid.findByPrice", query = "SELECT b FROM Bid b WHERE b.price = :price"),
+    @NamedQuery(name = "Bid.findByAdvertisementId", query = "SELECT b FROM Bid b WHERE b.advertisementId = :advertisementId")})
 public class Bid implements Serializable {
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
 
+    @Column(name = "Price")
+    private Double price;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Column(name = "Price")
-    private Long price;
     @JoinColumn(name = "advertisementId", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Advertisement advertisementId;
@@ -59,14 +61,6 @@ public class Bid implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public Long getPrice() {
-        return price;
-    }
-
-    public void setPrice(Long price) {
-        this.price = price;
     }
 
     public Advertisement getAdvertisementId() {
@@ -108,5 +102,13 @@ public class Bid implements Serializable {
     @Override
     public String toString() {
         return "nl.wetzel.entities.Bid[ id=" + id + " ]";
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
     }
 }
