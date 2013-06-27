@@ -5,6 +5,8 @@
         </div>
     </div>
 
+    <h2>Robert test 2</h2>
+    
     <!--<div class="ad-container"> -->
     <div class="row-fluid">
         <c:choose>
