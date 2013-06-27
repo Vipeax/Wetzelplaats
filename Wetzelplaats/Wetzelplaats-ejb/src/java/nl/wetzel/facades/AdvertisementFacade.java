@@ -27,6 +27,12 @@ public class AdvertisementFacade extends AbstractFacade<Advertisement> implement
 
     public static final String FIND_ALL = "Advertisement.findAll";
     public static final String FIND_BY_NAME = "Advertisement.findByName";
+    
+    //Robert J
+    public static final String FIND_BY_USER_ID = "Advertisement.findByUserId";
+    public static final String DELETE_BY_ID = "Advertisement.deleteById";
+    public static final String DELETE_BY_USER_ID = "Advertisement.deleteByUserId";
+    
     @PersistenceContext(unitName = "Wetzelplaats-ejbPU")
     private EntityManager em;
 
@@ -106,5 +112,51 @@ public class AdvertisementFacade extends AbstractFacade<Advertisement> implement
 
         edit(ad);
         return ad;
+    }
+    
+    @Override
+    public List<Advertisement> findByUserId(User user) 
+    {
+        List<Advertisement> result;
+
+        Query q = em.createNamedQuery(AdvertisementFacade.FIND_BY_USER_ID, Advertisement.class);
+        q.setParameter("userId", user);
+        result = q.getResultList();
+
+        return result;
+    }
+    
+    @Override
+    public int deleteById(int id)
+    {
+        try
+        {
+            Query q = em.createNamedQuery(AdvertisementFacade.DELETE_BY_ID, Advertisement.class);
+            q.setParameter("adId", id);
+            q.executeUpdate(); 
+            return 1;
+        }
+        
+        catch (RuntimeException e)
+        {
+            return -1;
+        }
+    }
+       
+    @Override
+    public int deleteByUserId(User user)
+    {
+        try
+        {
+            Query q = em.createNamedQuery(AdvertisementFacade.DELETE_BY_USER_ID, Advertisement.class);
+            q.setParameter("userId", user);
+            q.executeUpdate(); 
+            return 1;
+        }
+        
+        catch (RuntimeException e)
+        {
+            return -1;
+        }
     }
 }

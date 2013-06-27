@@ -6,11 +6,13 @@ package nl.wetzel.facades;
 
 import com.internet.custom.BCrypt;
 import java.util.List;
+import javax.ejb.EJB;
 import javax.ejb.EJBTransactionRolledbackException;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import nl.wetzel.entities.Advertisement;
 import nl.wetzel.entities.User;
 import nl.wetzel.exception.DuplicateEntityException;
 
@@ -20,8 +22,20 @@ import nl.wetzel.exception.DuplicateEntityException;
  */
 @Stateless
 public class UserFacade extends AbstractFacade<User> implements UserFacadeLocal {
+    @EJB
+    private BidFacadeLocal bidFacade;
+    @EJB
+    private AdvertisementFacadeLocal advertisementFacade;
 
+    
+    
+    
     public final static String FIND_BY_EMAIL = "User.findByEmail";
+    public final static String DELETE_BY_ID = "User.deleteById";
+    
+    //Robert J
+    public static final String FIND_ALL = "User.findAll";
+    
     @PersistenceContext(unitName = "Wetzelplaats-ejbPU")
     private EntityManager em;
 
@@ -83,6 +97,43 @@ public class UserFacade extends AbstractFacade<User> implements UserFacadeLocal 
         }
     }
     
+     //Robert J  
+    @Override
+    public List<User> findByLimit(Integer pageIndex, Integer amount) 
+    {
+        List<User> result;
+
+        Query q = em.createNamedQuery(UserFacade.FIND_ALL, User.class);
+        q.setMaxResults(amount);
+        q.setFirstResult(pageIndex * amount);
+
+        result = q.getResultList();
+
+        return result;
+    }
+    
+    @Override
+    public int deleteById(int id)
+    {
+        try
+        {
+            User us = find(id);
+            advertisementFacade.deleteByUserId(us);
+            bidFacade.deleteByUserId(us);
+            
+            Query q2 = em.createNamedQuery(UserFacade.DELETE_BY_ID, User.class);
+            q2.setParameter("userId", id);
+            q2.executeUpdate(); 
+            return 1;
+            
+            
+        }
+        
+        catch (RuntimeException e)
+        {
+            return -1;
+        }
+    }
     
     //<editor-fold defaultstate="collapsed" desc="getters/setters">
     @Override

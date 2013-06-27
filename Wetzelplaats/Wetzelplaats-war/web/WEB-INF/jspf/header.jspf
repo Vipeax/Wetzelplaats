@@ -1,3 +1,13 @@
+<%-- 
+    Document   : header.jspf
+    Created on : Jun 27, 2013, 9:07:04 PM
+    Author     : Timo
+    Mods       : Robert J
+
+    TODO: make proper use of user roles instead of ID's
+
+--%>
+
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -18,9 +28,14 @@
                     <c:choose>
                         <c:when test="${user == null}">
                             <a href="/Wetzelplaats-war/login">login</a> or <a href="/Wetzelplaats-war/register">register</a>
+                        </c:when> 
+                        <c:when test="${user.id == 2}">
+                            Welcome, ${user.firstname}! <br/>
+                            <a href="/Wetzelplaats-war/admin">Admin</a> - <a href="/Wetzelplaats-war/account">My account</a> - <a href="/Wetzelplaats-war/logout">logout</a>
                         </c:when>
                         <c:otherwise>
-                            Welcome, ${user.firstname}! <a href="/Wetzelplaats-war/logout">logout</a>
+                            Welcome, ${user.firstname}! <br/>
+                            <a href="/Wetzelplaats-war/account">My account</a> - <a href="/Wetzelplaats-war/logout">logout</a>
                         </c:otherwise>
                     </c:choose>
 

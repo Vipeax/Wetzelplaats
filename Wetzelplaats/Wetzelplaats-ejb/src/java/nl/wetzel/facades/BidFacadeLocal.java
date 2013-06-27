@@ -39,4 +39,11 @@ public interface BidFacadeLocal {
     public void setEm(EntityManager em);
 
     public void setAdvertisementFacade(AdvertisementFacadeLocal advertisementFacade);
+    
+    //Robert J
+    public List<Bid> findByUserId(User user);
+    
+    public int deleteById(Advertisement ad);
+    
+    public int deleteByUserId(User user);
 }

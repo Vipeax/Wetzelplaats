@@ -23,6 +23,13 @@ import nl.wetzel.entities.User;
 public class BidFacade extends AbstractFacade<Bid> implements BidFacadeLocal {
 
     public final static String FIND_BY_ADVERTISEMENT_ID = "Bid.findByAdvertisementId";
+    
+    //Robert J
+    public final static String FIND_BY_USER_ID = "Bid.findByUserId";
+    public final static String DELETE_BY_ID = "Bid.deleteById";
+    public final static String DELETE_BY_USER_ID = "Bid.deleteByUserId";
+    public final static String DELETE_BY_ADVERTISEMENT_ID = "Bid.deleteByAdvertisementId";
+    
     @PersistenceContext(unitName = "Wetzelplaats-ejbPU")
     private EntityManager em;
     @EJB
@@ -84,5 +91,53 @@ public class BidFacade extends AbstractFacade<Bid> implements BidFacadeLocal {
         advertisementFacade.addBid(ad, bid);
 
         return bid;
+    }
+    
+    //Robert J
+    
+    @Override
+    public List<Bid> findByUserId(User user) 
+    {
+        List<Bid> result;
+
+        Query q = em.createNamedQuery(BidFacade.FIND_BY_USER_ID, Bid.class);
+        q.setParameter("userId", user);
+        result = q.getResultList();
+
+        return result;
+    }
+    
+    @Override
+    public int deleteById(Advertisement ad)
+    {
+        try
+        {
+            Query q = em.createNamedQuery(BidFacade.DELETE_BY_ADVERTISEMENT_ID, Bid.class);
+            q.setParameter("advertisementId", ad);
+            q.executeUpdate(); 
+            return 1; 
+        }
+        
+        catch (RuntimeException e)
+        {
+            return -1;
+        }
+    }
+    
+    @Override
+    public int deleteByUserId(User user)
+    {
+        try
+        {
+            Query q = em.createNamedQuery(BidFacade.DELETE_BY_USER_ID, Bid.class);
+            q.setParameter("userId", user);
+            q.executeUpdate(); 
+            return 1; 
+        }
+        
+        catch (RuntimeException e)
+        {
+            return -1;
+        }
     }
 }

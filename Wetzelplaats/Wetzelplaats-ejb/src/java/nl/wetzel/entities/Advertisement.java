@@ -33,6 +33,11 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "advertisement")
 @XmlRootElement
 @NamedQueries({
+    //Robert J
+    @NamedQuery(name = "Advertisement.findByUserId", query = "SELECT a FROM Advertisement a WHERE a.userId = :userId"),
+    @NamedQuery(name = "Advertisement.deleteById", query = "DELETE FROM Advertisement a WHERE a.id = :adId"),
+    @NamedQuery(name = "Advertisement.deleteByUserId", query = "DELETE FROM Advertisement a WHERE a.userId = :userId"),
+    
     @NamedQuery(name = "Advertisement.findAll", query = "SELECT a FROM Advertisement a"),
     @NamedQuery(name = "Advertisement.findById", query = "SELECT a FROM Advertisement a WHERE a.id = :id"),
     @NamedQuery(name = "Advertisement.findByName", query = "SELECT a FROM Advertisement a WHERE a.name = :name"),
@@ -179,7 +184,7 @@ public class Advertisement implements Serializable {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(long price) {
         this.price = price;
     }
 }

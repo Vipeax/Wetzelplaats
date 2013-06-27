@@ -1,3 +1,9 @@
+<%-- 
+    Document   : index
+    Created on : Jun 20, 2013, 9:07:04 PM
+    Author     : Timo
+--%>
+
 <div class="body rounded">
     <div class="row">
         <div class="span12">
@@ -5,14 +11,11 @@
         </div>
     </div>
 
-    <h2>Robert test 2</h2>
-    <h3>Robert test 3</h3>
-    
     <!--<div class="ad-container"> -->
     <div class="row-fluid">
         <c:choose>
             <c:when test="${adCount == 0}">
-                <p>Er zijn helaas geen advertenties op dit moment :-(</p>
+                <p>No ads found. How about you <a href="ad/create">create an ad</a>?</p>
             </c:when>
             <c:otherwise>
                 <c:forEach var="ad" items="${ads}">

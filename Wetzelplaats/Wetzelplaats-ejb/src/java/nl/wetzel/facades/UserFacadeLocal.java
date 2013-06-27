@@ -37,4 +37,8 @@ public interface UserFacadeLocal {
     public User Register(String firstname, String lastname, String email, String password);
 
     public User login(String email, String password);
+    
+    //Robert J
+    public List<User> findByLimit(Integer pageIndex, Integer amount);
+    public int deleteById(int id);
 }

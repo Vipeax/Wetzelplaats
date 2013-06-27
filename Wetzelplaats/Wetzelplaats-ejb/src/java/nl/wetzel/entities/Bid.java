@@ -26,6 +26,12 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "bid")
 @XmlRootElement
 @NamedQueries({
+    //Robert J
+    @NamedQuery(name = "Bid.findByUserId", query = "SELECT b FROM Bid b WHERE b.userId = :userId"),
+    @NamedQuery(name = "Bid.deleteById", query = "DELETE FROM Bid b WHERE b.id = :id"),
+    @NamedQuery(name = "Bid.deleteByUserId", query = "DELETE FROM Bid b WHERE b.userId = :userId"),
+    @NamedQuery(name = "Bid.deleteByAdvertisementId", query = "DELETE FROM Bid b WHERE b.advertisementId = :advertisementId"),
+    
     @NamedQuery(name = "Bid.findAll", query = "SELECT b FROM Bid b"),
     @NamedQuery(name = "Bid.findById", query = "SELECT b FROM Bid b WHERE b.id = :id"),
     @NamedQuery(name = "Bid.findByPrice", query = "SELECT b FROM Bid b WHERE b.price = :price"),
@@ -34,7 +40,7 @@ public class Bid implements Serializable {
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
 
     @Column(name = "Price")
-    private Double price;
+    private double price;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -104,11 +110,11 @@ public class Bid implements Serializable {
         return "nl.wetzel.entities.Bid[ id=" + id + " ]";
     }
 
-    public Double getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(Double price) {
-        this.price = price;
+    public void setPrice(double price) {
+        this.price = price; 
     }
 }

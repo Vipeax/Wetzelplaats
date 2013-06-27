@@ -30,6 +30,9 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "user")
 @XmlRootElement
 @NamedQueries({
+    //Robert J
+    @NamedQuery(name = "User.deleteById", query = "DELETE FROM User u WHERE u.id = :userId"),
+    
     @NamedQuery(name = "User.findAll", query = "SELECT u FROM User u"),
     @NamedQuery(name = "User.findById", query = "SELECT u FROM User u WHERE u.id = :id"),
     @NamedQuery(name = "User.findByFirstname", query = "SELECT u FROM User u WHERE u.firstname = :firstname"),
@@ -37,6 +40,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "User.findByEmail", query = "SELECT u FROM User u WHERE u.email = :email"),
     @NamedQuery(name = "User.findByPassword", query = "SELECT u FROM User u WHERE u.password = :password")})
 public class User implements Serializable {
+    @Column(name = "userType")
+    private Short userType;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
     private Collection<Advertisement> advertisementCollection;
@@ -166,5 +171,13 @@ public class User implements Serializable {
 
     public void setBidCollection(Collection<Bid> bidCollection) {
         this.bidCollection = bidCollection;
+    }
+
+    public Short getUserType() {
+        return userType;
+    }
+
+    public void setUserType(Short userType) {
+        this.userType = userType;
     }
 }

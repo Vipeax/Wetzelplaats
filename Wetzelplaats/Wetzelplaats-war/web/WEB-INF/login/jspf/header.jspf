@@ -1,9 +1,20 @@
+<%-- 
+    Document   : header.jspf
+    Author     : Timo
+    Modified   : Robert J - Bootstrap support
+
+    TODO       :
+                    - Bootstrap causes text problems inside textboxes (IE10)
+--%>
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Login - Wetzelplaats</title>
-        <link rel="stylesheet" type="text/css" href="resources/css/style.css"
+        <link rel="stylesheet" type="text/css" href="resources/css/style.css"/>
+        <link rel="stylesheet" type="text/css" href="/Wetzelplaats-war/resources/css/bootstrap.min.css"/>
+        <link rel="stylesheet" type="text/css" href="/Wetzelplaats-war/resources/css/newstyle.css"/>
     </head>
     <body>
         <div class="loginBox">
