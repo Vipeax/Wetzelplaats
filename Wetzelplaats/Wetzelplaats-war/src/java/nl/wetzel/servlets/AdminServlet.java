@@ -27,21 +27,23 @@ public class AdminServlet extends HttpServlet
   protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException
   {
-    Integer pageIndex = Convert.tryParseInt(request.getParameter("p"));
-    int adCount = this.advertisementFacade.count();
+      Integer pageIndexAd = Convert.tryParseInt(request.getParameter("pa"));
+      Integer pageIndexUser = Convert.tryParseInt(request.getParameter("pu"));
+      int adCount = this.advertisementFacade.count();
 
-    List ads = this.advertisementFacade.findByLimit(pageIndex, Integer.valueOf(4));
+      List ads = this.advertisementFacade.findByLimit(pageIndexAd, Integer.valueOf(4));
 
-    int userCount = this.userFacade.count();
-    List users = this.userFacade.findByLimit(pageIndex, Integer.valueOf(4));
+      int userCount = this.userFacade.count();
+      List users = this.userFacade.findByLimit(pageIndexUser, Integer.valueOf(4));
 
-    request.setAttribute("p", pageIndex);
-    request.setAttribute("adCount", Integer.valueOf(adCount));
-    request.setAttribute("ads", ads);
-    request.setAttribute("userCount", Integer.valueOf(userCount));
-    request.setAttribute("users", users);
+      request.setAttribute("pa", pageIndexAd);
+      request.setAttribute("pu", pageIndexUser);
+      request.setAttribute("adCount", Integer.valueOf(adCount));
+      request.setAttribute("ads", ads);
+      request.setAttribute("userCount", Integer.valueOf(userCount));
+      request.setAttribute("users", users);
 
-    request.getRequestDispatcher("/WEB-INF/admin/admin.jsp").forward(request, response);
+      request.getRequestDispatcher("/WEB-INF/admin/admin.jsp").forward(request, response);
   }
 
   @Override
