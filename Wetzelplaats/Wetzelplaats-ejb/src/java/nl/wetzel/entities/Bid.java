@@ -27,6 +27,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     //Robert J
+    @NamedQuery(name = "Bid.findAll", query = "SELECT b FROM Bid b"),
     @NamedQuery(name = "Bid.findByUserId", query = "SELECT b FROM Bid b WHERE b.userId = :userId"),
     @NamedQuery(name = "Bid.deleteById", query = "DELETE FROM Bid b WHERE b.id = :bidId"),
     @NamedQuery(name = "Bid.deleteByUserId", query = "DELETE FROM Bid b WHERE b.userId = :userId"),

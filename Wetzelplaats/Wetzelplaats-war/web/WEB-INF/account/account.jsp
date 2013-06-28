@@ -62,14 +62,14 @@
                     <div class="span12 paging">
                         <c:forEach begin="0" end="${adCount / 4}" varStatus="loop">
                             <c:choose>
-                                <c:when test="${loop.index == 0 && (p == null || p == 0)}">
+                                <c:when test="${loop.index == 0 && (pa == null || pa == 0)}">
                                     ${loop.index + 1}
                                 </c:when>
-                                <c:when test="${loop.index != 0 && (p != null && p == loop.index)}">
+                                <c:when test="${loop.index != 0 && (pa != null && pa == loop.index)}">
                                     ${loop.index + 1}
                                 </c:when>
                                 <c:otherwise>
-                                    <a href="/Wetzelplaats-war/index?p=${loop.index}">${loop.index + 1}</a>
+                                    <a href="/Wetzelplaats-war/account?pa=${loop.index}&pb=${pb}">${loop.index + 1}</a>
                                 </c:otherwise>
                             </c:choose>
                         </c:forEach>
@@ -103,14 +103,14 @@
                     <div class="span12 paging">
                         <c:forEach begin="0" end="${bidCount / 4}" varStatus="loop">
                             <c:choose>
-                                <c:when test="${loop.index == 0 && (p == null || p == 0)}">
+                                <c:when test="${loop.index == 0 && (pb == null || pb == 0)}">
                                     ${loop.index + 1}
                                 </c:when>
-                                <c:when test="${loop.index != 0 && (p != null && p == loop.index)}">
+                                <c:when test="${loop.index != 0 && (pb != null && pb == loop.index)}">
                                     ${loop.index + 1}
                                 </c:when>
                                 <c:otherwise>
-                                    <a href="/Wetzelplaats-war/account?p=${loop.index}">${loop.index + 1}</a>
+                                    <a href="/Wetzelplaats-war/account?pa=${pa}&pb=${loop.index}">${loop.index + 1}</a>
                                 </c:otherwise>
                             </c:choose>
                         </c:forEach>

@@ -25,19 +25,21 @@ public class AccountServlet extends HttpServlet
   protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException
   {
-    Integer pageIndex = Convert.tryParseInt(request.getParameter("p"));
-
+    Integer pageIndexAd = Convert.tryParseInt(request.getParameter("pa"));
+    Integer pageIndexBid = Convert.tryParseInt(request.getParameter("pb"));
+    
     User user = (User)request.getSession().getAttribute("user");
-    List ads = this.advertisementFacade.findByUserId(user);
+    List ads = this.advertisementFacade.findByLimit(pageIndexAd, Integer.valueOf(4));
     int adCount = ads.size();
 
-    List bids = this.bidFacade.findByUserId(user);
+    List bids = this.bidFacade.findByLimit(pageIndexBid, Integer.valueOf(4));
     int bidCount = bids.size();
 
-    request.setAttribute("p", pageIndex);
+    request.setAttribute("pa", pageIndexAd);
+    request.setAttribute("pb", pageIndexBid);
     request.setAttribute("adCount", Integer.valueOf(adCount));
     request.setAttribute("ads", ads);
-    request.setAttribute("bidcount", Integer.valueOf(bidCount));
+    request.setAttribute("bidCount", Integer.valueOf(bidCount));
     request.setAttribute("bids", bids);
     request.getRequestDispatcher("/WEB-INF/account/account.jsp").forward(request, response);
   }

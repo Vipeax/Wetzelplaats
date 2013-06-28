@@ -72,7 +72,7 @@
                                     ${loop.index + 1}
                                 </c:when>
                                 <c:otherwise>
-                                    <a href="/Wetzelplaats-war/admin?pa=${loop.index}&pu=${pu}>${loop.index + 1}</a>
+                                    <a href="/Wetzelplaats-war/admin?pu=${pu}&pa=${loop.index}">${loop.index + 1}</a>
                                 </c:otherwise>
                             </c:choose>
                         </c:forEach>
@@ -90,7 +90,7 @@
             <!--<div class="adv-block fll"> -->
             <div class="span3">
                 <b>${user.firstname} ${user.lastname}</b><br/>
-                <i>${user.email}</i>
+                <i>${user.email}</i><br/>
                 <a href="/Wetzelplaats-war/user/delete?did=${user.id}&admin=1">Delete</a>
             </div>
         </c:forEach>            
@@ -107,7 +107,7 @@
                             ${loop.index + 1}
                         </c:when>
                         <c:otherwise>
-                            <a href="/Wetzelplaats-war/admin?pu=${loop.index}&pa=${pa}>${loop.index + 1}</a>
+                            <a href="/Wetzelplaats-war/admin?pu=${loop.index}&pa=${pa}">${loop.index + 1}</a>
                         </c:otherwise>
                     </c:choose>
                 </c:forEach>

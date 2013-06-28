@@ -25,6 +25,7 @@ public class BidFacade extends AbstractFacade<Bid> implements BidFacadeLocal {
     public final static String FIND_BY_ADVERTISEMENT_ID = "Bid.findByAdvertisementId";
     
     //Robert J
+    public static final String FIND_ALL = "Bid.findAll";
     public final static String FIND_BY_USER_ID = "Bid.findByUserId";
     public final static String DELETE_BY_ID = "Bid.deleteById";
     public final static String DELETE_BY_USER_ID = "Bid.deleteByUserId";
@@ -85,6 +86,19 @@ public class BidFacade extends AbstractFacade<Bid> implements BidFacadeLocal {
     }
     
     //Robert J
+    
+    @Override
+    public List<Bid> findByLimit(Integer pageIndex, Integer amount) {
+        List<Bid> result;
+
+        Query q = em.createNamedQuery(BidFacade.FIND_ALL, Bid.class);
+        q.setMaxResults(amount);
+        q.setFirstResult(pageIndex * amount);
+
+        result = q.getResultList();
+
+        return result;
+    }
     
     @Override
     public List<Bid> findByAdvertisementId(int advertisementId) 
