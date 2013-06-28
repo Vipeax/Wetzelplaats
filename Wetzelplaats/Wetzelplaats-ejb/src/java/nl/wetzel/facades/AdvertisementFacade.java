@@ -114,6 +114,22 @@ public class AdvertisementFacade extends AbstractFacade<Advertisement> implement
         return ad;
     }
     
+    //Robert J
+    @Override
+    public Advertisement removeBid(Advertisement ad, Bid bid) {
+        List<Bid> bidCollection = (List) ad.getBidCollection();
+
+        if(bidCollection == null) {
+            bidCollection = new LinkedList<Bid>();
+        }
+        
+        bidCollection.remove(bid);
+        ad.setBidCollection(bidCollection);
+
+        edit(ad);
+        return ad;
+    }
+    
     @Override
     public List<Advertisement> findByUserId(User user) 
     {

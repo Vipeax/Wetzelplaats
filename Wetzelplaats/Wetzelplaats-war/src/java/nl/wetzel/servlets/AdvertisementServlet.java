@@ -31,7 +31,7 @@ public class AdvertisementServlet extends HttpServlet {
     private BidFacadeLocal bidFacade;
     @EJB
     private AdvertisementFacadeLocal advertisementFacade;
-
+    
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP
@@ -54,9 +54,9 @@ public class AdvertisementServlet extends HttpServlet {
         Integer adId = Convert.tryParseInt((String) request.getParameter("id"));
 
         Advertisement ad = advertisementFacade.find(adId);
-//        //        List<Bid> bidCollection = bidHelper.getBidFacade().findByAdvertisementId(adId);
-        List<Bid> bidCollection = (List) ad.getBidCollection();
-
+        
+        List<Bid> bidCollection = bidFacade.findByAdvertisementId(adId);
+        
         request.setAttribute("ad", ad);
         request.setAttribute("ad.bidCollection", bidCollection);
         request.getRequestDispatcher("/WEB-INF/advertisement/view.jsp").forward(request, response);

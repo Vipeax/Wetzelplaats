@@ -29,7 +29,7 @@ public class AdvertisementDeleteServlet extends HttpServlet
     int admin = Integer.parseInt(request.getParameter("admin"));
 
     Advertisement ad = this.advertisementFacade.find(Integer.valueOf(deleteId));
-    this.bidFacade.deleteById(ad);
+    this.bidFacade.deleteByAdId(ad);
 
     this.advertisementFacade.deleteById(deleteId);
 

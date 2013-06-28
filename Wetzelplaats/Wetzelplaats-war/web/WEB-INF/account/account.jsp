@@ -93,7 +93,8 @@
                     <!--<div class="adv-block fll"> -->
                     <div class="span3">
                         <h3><a href="/Wetzelplaats-war/ad/view?id=${bid.advertisementId.id}">${bid.advertisementId.name}</a></h3>
-                        ${bid.price}
+                        ${bid.price}<br/>
+                        <a href="/Wetzelplaats-war/bid/delete?bId=${bid.id}">Delete</a>
                     </div>
                 </c:forEach>            
                 <!--<div class="clear"></div> -->

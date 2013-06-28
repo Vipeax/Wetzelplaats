@@ -58,15 +58,6 @@ public class BidFacade extends AbstractFacade<Bid> implements BidFacadeLocal {
         super(Bid.class);
     }
 
-    @Override
-    public List<Bid> findByAdvertisementId(int advertisementId) {
-
-        Query q = em.createNamedQuery(BidFacade.FIND_BY_ADVERTISEMENT_ID, Bid.class);
-        q.setParameter("advertisementId", advertisementId);
-
-        return q.getResultList();
-    }
-
     /**
      * Create a bid
      *
@@ -96,6 +87,23 @@ public class BidFacade extends AbstractFacade<Bid> implements BidFacadeLocal {
     //Robert J
     
     @Override
+    public List<Bid> findByAdvertisementId(int advertisementId) 
+    {
+        try
+        {
+            Query q = em.createNamedQuery(BidFacade.FIND_BY_ADVERTISEMENT_ID, Bid.class);
+            Advertisement ad = advertisementFacade.find(advertisementId);
+            q.setParameter("advertisementId", ad);
+            return q.getResultList();
+        }
+        
+        catch (RuntimeException e)
+        {
+            return null;
+        }
+    }
+        
+    @Override
     public List<Bid> findByUserId(User user) 
     {
         List<Bid> result;
@@ -108,7 +116,24 @@ public class BidFacade extends AbstractFacade<Bid> implements BidFacadeLocal {
     }
     
     @Override
-    public int deleteById(Advertisement ad)
+    public int deleteById(int id)
+    {
+        try
+        {
+            Query q = em.createNamedQuery(BidFacade.DELETE_BY_ID, Bid.class);
+            q.setParameter("bidId", id);
+            q.executeUpdate(); 
+            return 1;
+        }
+        
+        catch (RuntimeException e)
+        {
+            return -1;
+        }
+    }
+    
+    @Override
+    public int deleteByAdId(Advertisement ad)
     {
         try
         {

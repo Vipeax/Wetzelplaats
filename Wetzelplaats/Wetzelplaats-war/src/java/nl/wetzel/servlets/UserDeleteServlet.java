@@ -33,7 +33,7 @@ public class UserDeleteServlet extends HttpServlet
     int deleteId = Integer.parseInt(request.getParameter("did"));
 
     Advertisement ad = this.advertisementFacade.find(Integer.valueOf(deleteId));
-    this.bidFacade.deleteById(ad);
+    this.bidFacade.deleteByAdId(ad);
 
     User user = this.userFacade.find(Integer.valueOf(deleteId));
     this.advertisementFacade.deleteByUserId(user);

@@ -46,4 +46,5 @@ public interface AdvertisementFacadeLocal {
     public List<Advertisement> findByUserId(User user);
     public int deleteById(int id);
     public int deleteByUserId(User user);
+    public Advertisement removeBid(Advertisement ad, Bid bid);
 }
