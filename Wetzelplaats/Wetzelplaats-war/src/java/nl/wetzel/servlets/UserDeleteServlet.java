@@ -15,46 +15,40 @@ import nl.wetzel.facades.AdvertisementFacadeLocal;
 import nl.wetzel.facades.BidFacadeLocal;
 import nl.wetzel.facades.UserFacadeLocal;
 
-@WebServlet(name="UserDeleteServlet", urlPatterns={"/user/delete"})
-public class UserDeleteServlet extends HttpServlet
-{
+@WebServlet(name = "UserDeleteServlet", urlPatterns = {"/user/delete"})
+public class UserDeleteServlet extends HttpServlet {
 
-  @EJB
-  private UserFacadeLocal userFacade;
+    @EJB
+    private UserFacadeLocal userFacade;
+    @EJB
+    private BidFacadeLocal bidFacade;
+    @EJB
+    private AdvertisementFacadeLocal advertisementFacade;
 
-  @EJB
-  private BidFacadeLocal bidFacade;
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        int deleteId = Integer.parseInt(request.getParameter("did"));
+        User user = this.userFacade.find(Integer.valueOf(deleteId));
 
-  @EJB
-  private AdvertisementFacadeLocal advertisementFacade;
+        // Advertisement ad = bid.getAdvertisementId();
+        //   this.advertisementFacade.removeBid(ad, bid);
 
-  @Override
-  protected void doGet(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException
-  {
-      int deleteId = Integer.parseInt(request.getParameter("did"));
-      User user = this.userFacade.find(Integer.valueOf(deleteId));
-      
-     // Advertisement ad = bid.getAdvertisementId();
-     //   this.advertisementFacade.removeBid(ad, bid);
-         
-      List<Bid> bids = bidFacade.findByUserId(user);
-      
-      for (Bid bid : bids) 
-      {
-          Advertisement ad = bid.getAdvertisementId();
-          ad.getBidCollection().remove(bid);
-          advertisementFacade.edit(ad);
-      }       
-        
-      this.advertisementFacade.deleteByUserId(user);
-      this.userFacade.deleteById(deleteId);
-      response.sendRedirect("/Wetzelplaats-war/admin");
-  }
+        List<Bid> bids = bidFacade.findByUserId(user);
 
-  @Override
-  public String getServletInfo()
-  {
-    return "Short description";
-  }
+        for (Bid bid : bids) {
+            Advertisement ad = bid.getAdvertisementId();
+            ad.getBidCollection().remove(bid);
+            advertisementFacade.edit(ad);
+        }
+
+        this.advertisementFacade.deleteByUserId(user);
+        this.userFacade.deleteById(deleteId);
+        response.sendRedirect("/Wetzelplaats-war/admin");
+    }
+
+    @Override
+    public String getServletInfo() {
+        return "Short description";
+    }
 }

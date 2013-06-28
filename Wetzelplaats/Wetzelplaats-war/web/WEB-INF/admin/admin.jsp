@@ -91,6 +91,7 @@
             <div class="span3">
                 <b>${user.firstname} ${user.lastname} ${user.email}</b>
                 <a href="/Wetzelplaats-war/user/delete?did=${user.id}&admin=1">Delete</a>
+                <a href="/Wetzelplaats-war/user/edit?id=${user.id}">Edit</a>
             </div>
         </c:forEach>            
         <!--<div class="clear"></div> -->

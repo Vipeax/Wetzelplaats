@@ -48,7 +48,7 @@ public class IndexServlet extends HttpServlet {
 
         //amount = 4 because it's nice to have 4 ads on the page
         List<Advertisement> ads = advertisementFacade.findByLimit(pageIndex, 4);
-        
+
         request.setAttribute("p", pageIndex);
         request.setAttribute("adCount", adCount);
         request.setAttribute("ads", ads);

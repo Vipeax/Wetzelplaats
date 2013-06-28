@@ -27,12 +27,10 @@ public class AdvertisementFacade extends AbstractFacade<Advertisement> implement
 
     public static final String FIND_ALL = "Advertisement.findAll";
     public static final String FIND_BY_NAME = "Advertisement.findByName";
-    
     //Robert J
     public static final String FIND_BY_USER_ID = "Advertisement.findByUserId";
     public static final String DELETE_BY_ID = "Advertisement.deleteById";
     public static final String DELETE_BY_USER_ID = "Advertisement.deleteByUserId";
-    
     @PersistenceContext(unitName = "Wetzelplaats-ejbPU")
     private EntityManager em;
 
@@ -103,36 +101,35 @@ public class AdvertisementFacade extends AbstractFacade<Advertisement> implement
     public Advertisement addBid(Advertisement ad, Bid bid) {
         List<Bid> bidCollection = (List) ad.getBidCollection();
 
-        if(bidCollection == null) {
+        if (bidCollection == null) {
             bidCollection = new LinkedList<Bid>();
         }
-        
+
         bidCollection.add(0, bid);
         ad.setBidCollection(bidCollection);
 
         edit(ad);
         return ad;
     }
-    
+
     //Robert J
     @Override
     public Advertisement removeBid(Advertisement ad, Bid bid) {
         List<Bid> bidCollection = (List) ad.getBidCollection();
 
-        if(bidCollection == null) {
+        if (bidCollection == null) {
             bidCollection = new LinkedList<Bid>();
         }
-        
+
         bidCollection.remove(bid);
         ad.setBidCollection(bidCollection);
 
         edit(ad);
         return ad;
     }
-    
+
     @Override
-    public List<Advertisement> findByUserId(User user) 
-    {
+    public List<Advertisement> findByUserId(User user) {
         List<Advertisement> result;
 
         Query q = em.createNamedQuery(AdvertisementFacade.FIND_BY_USER_ID, Advertisement.class);
@@ -141,37 +138,27 @@ public class AdvertisementFacade extends AbstractFacade<Advertisement> implement
 
         return result;
     }
-    
+
     @Override
-    public int deleteById(int id)
-    {
-        try
-        {
+    public int deleteById(int id) {
+        try {
             Query q = em.createNamedQuery(AdvertisementFacade.DELETE_BY_ID, Advertisement.class);
             q.setParameter("adId", id);
-            q.executeUpdate(); 
+            q.executeUpdate();
             return 1;
-        }
-        
-        catch (RuntimeException e)
-        {
+        } catch (RuntimeException e) {
             return -1;
         }
     }
-       
+
     @Override
-    public int deleteByUserId(User user)
-    {
-        try
-        {
+    public int deleteByUserId(User user) {
+        try {
             Query q = em.createNamedQuery(AdvertisementFacade.DELETE_BY_USER_ID, Advertisement.class);
             q.setParameter("userId", user);
-            q.executeUpdate(); 
+            q.executeUpdate();
             return 1;
-        }
-        
-        catch (RuntimeException e)
-        {
+        } catch (RuntimeException e) {
             return -1;
         }
     }

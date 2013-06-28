@@ -10,6 +10,8 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -32,7 +34,6 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     //Robert J
     @NamedQuery(name = "User.deleteById", query = "DELETE FROM User u WHERE u.id = :userId"),
-    
     @NamedQuery(name = "User.findAll", query = "SELECT u FROM User u"),
     @NamedQuery(name = "User.findById", query = "SELECT u FROM User u WHERE u.id = :id"),
     @NamedQuery(name = "User.findByFirstname", query = "SELECT u FROM User u WHERE u.firstname = :firstname"),
@@ -40,9 +41,17 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "User.findByEmail", query = "SELECT u FROM User u WHERE u.email = :email"),
     @NamedQuery(name = "User.findByPassword", query = "SELECT u FROM User u WHERE u.password = :password")})
 public class User implements Serializable {
-    @Column(name = "userType")
-    private Short userType;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "userType")
+    private UserType userType;
+
+    public enum UserType {
+
+        Admin,
+        User,
+        Guest
+    }
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
     private Collection<Advertisement> advertisementCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "userId")
@@ -173,11 +182,11 @@ public class User implements Serializable {
         this.bidCollection = bidCollection;
     }
 
-    public Short getUserType() {
+    public UserType getUserType() {
         return userType;
     }
 
-    public void setUserType(Short userType) {
+    public void setUserType(UserType userType) {
         this.userType = userType;
     }
 }

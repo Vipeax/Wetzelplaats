@@ -31,7 +31,6 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Bid.deleteById", query = "DELETE FROM Bid b WHERE b.id = :bidId"),
     @NamedQuery(name = "Bid.deleteByUserId", query = "DELETE FROM Bid b WHERE b.userId = :userId"),
     @NamedQuery(name = "Bid.deleteByAdvertisementId", query = "DELETE FROM Bid b WHERE b.advertisementId = :advertisementId"),
-    
     @NamedQuery(name = "Bid.findAll", query = "SELECT b FROM Bid b"),
     @NamedQuery(name = "Bid.findById", query = "SELECT b FROM Bid b WHERE b.id = :id"),
     @NamedQuery(name = "Bid.findByPrice", query = "SELECT b FROM Bid b WHERE b.price = :price"),
@@ -115,6 +114,6 @@ public class Bid implements Serializable {
     }
 
     public void setPrice(double price) {
-        this.price = price; 
+        this.price = price;
     }
 }

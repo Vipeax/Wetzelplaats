@@ -29,7 +29,7 @@ public interface BidFacadeLocal {
     List<Bid> findAll();
 
     List<Bid> findRange(int[] range);
-    
+
     List<Bid> findByAdvertisementId(int advertisementId);
 
     int count();
@@ -39,10 +39,13 @@ public interface BidFacadeLocal {
     public void setEm(EntityManager em);
 
     public void setAdvertisementFacade(AdvertisementFacadeLocal advertisementFacade);
-    
+
     //Robert J
-    public List<Bid> findByUserId(User user);    
-    public int deleteById(int id);         
-    public int deleteByAdId(Advertisement ad); 
+    public List<Bid> findByUserId(User user);
+
+    public int deleteById(int id);
+
+    public int deleteByAdId(Advertisement ad);
+
     public int deleteByUserId(User user);
 }

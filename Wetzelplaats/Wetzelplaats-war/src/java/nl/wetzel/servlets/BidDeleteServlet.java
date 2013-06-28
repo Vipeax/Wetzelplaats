@@ -22,13 +22,12 @@ import nl.wetzel.facades.BidFacadeLocal;
  */
 @WebServlet(name = "BidDeleteServlet", urlPatterns = {"/bid/delete"})
 public class BidDeleteServlet extends HttpServlet {
-    @EJB
-    private AdvertisementFacadeLocal advertisementFacade;
 
     @EJB
+    private AdvertisementFacadeLocal advertisementFacade;
+    @EJB
     private BidFacadeLocal bidFacade;
-    
-    
+
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP
@@ -41,10 +40,9 @@ public class BidDeleteServlet extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException 
-    {
+            throws ServletException, IOException {
         int bidId = Integer.parseInt(request.getParameter("bId"));
-        
+
         Bid bid = bidFacade.find(bidId);
         Advertisement ad = bid.getAdvertisementId();
         this.advertisementFacade.removeBid(ad, bid);

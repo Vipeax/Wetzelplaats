@@ -29,6 +29,7 @@ public class Convert {
 
     /**
      * Tries to parse double.
+     *
      * @param String value the string to parse
      * @return return double. On fail, returns 0
      */

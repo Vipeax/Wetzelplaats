@@ -23,13 +23,11 @@ import nl.wetzel.entities.User;
 public class BidFacade extends AbstractFacade<Bid> implements BidFacadeLocal {
 
     public final static String FIND_BY_ADVERTISEMENT_ID = "Bid.findByAdvertisementId";
-    
     //Robert J
     public final static String FIND_BY_USER_ID = "Bid.findByUserId";
     public final static String DELETE_BY_ID = "Bid.deleteById";
     public final static String DELETE_BY_USER_ID = "Bid.deleteByUserId";
     public final static String DELETE_BY_ADVERTISEMENT_ID = "Bid.deleteByAdvertisementId";
-    
     @PersistenceContext(unitName = "Wetzelplaats-ejbPU")
     private EntityManager em;
     @EJB
@@ -37,6 +35,7 @@ public class BidFacade extends AbstractFacade<Bid> implements BidFacadeLocal {
 
     /**
      * this setter is actually for unit testing
+     *
      * @param advertisementFacade
      */
     @Override
@@ -83,29 +82,22 @@ public class BidFacade extends AbstractFacade<Bid> implements BidFacadeLocal {
 
         return bid;
     }
-    
+
     //Robert J
-    
     @Override
-    public List<Bid> findByAdvertisementId(int advertisementId) 
-    {
-        try
-        {
+    public List<Bid> findByAdvertisementId(int advertisementId) {
+        try {
             Query q = em.createNamedQuery(BidFacade.FIND_BY_ADVERTISEMENT_ID, Bid.class);
             Advertisement ad = advertisementFacade.find(advertisementId);
             q.setParameter("advertisementId", ad);
             return q.getResultList();
-        }
-        
-        catch (RuntimeException e)
-        {
+        } catch (RuntimeException e) {
             return null;
         }
     }
-        
+
     @Override
-    public List<Bid> findByUserId(User user) 
-    {
+    public List<Bid> findByUserId(User user) {
         List<Bid> result;
 
         Query q = em.createNamedQuery(BidFacade.FIND_BY_USER_ID, Bid.class);
@@ -114,54 +106,39 @@ public class BidFacade extends AbstractFacade<Bid> implements BidFacadeLocal {
 
         return result;
     }
-    
+
     @Override
-    public int deleteById(int id)
-    {
-        try
-        {
+    public int deleteById(int id) {
+        try {
             Query q = em.createNamedQuery(BidFacade.DELETE_BY_ID, Bid.class);
             q.setParameter("bidId", id);
-            q.executeUpdate(); 
+            q.executeUpdate();
             return 1;
-        }
-        
-        catch (RuntimeException e)
-        {
+        } catch (RuntimeException e) {
             return -1;
         }
     }
-    
+
     @Override
-    public int deleteByAdId(Advertisement ad)
-    {
-        try
-        {
+    public int deleteByAdId(Advertisement ad) {
+        try {
             Query q = em.createNamedQuery(BidFacade.DELETE_BY_ADVERTISEMENT_ID, Bid.class);
             q.setParameter("advertisementId", ad);
-            q.executeUpdate(); 
-            return 1; 
-        }
-        
-        catch (RuntimeException e)
-        {
+            q.executeUpdate();
+            return 1;
+        } catch (RuntimeException e) {
             return -1;
         }
     }
-    
+
     @Override
-    public int deleteByUserId(User user)
-    {
-        try
-        {
+    public int deleteByUserId(User user) {
+        try {
             Query q = em.createNamedQuery(BidFacade.DELETE_BY_USER_ID, Bid.class);
             q.setParameter("userId", user);
-            q.executeUpdate(); 
-            return 1; 
-        }
-        
-        catch (RuntimeException e)
-        {
+            q.executeUpdate();
+            return 1;
+        } catch (RuntimeException e) {
             return -1;
         }
     }

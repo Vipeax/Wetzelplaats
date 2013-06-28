@@ -25,10 +25,10 @@ import nl.wetzel.facades.AdvertisementFacadeLocal;
  */
 @WebServlet(name = "AdvertismentEditServlet", urlPatterns = {"/ad/edit"})
 public class AdvertismentEditServlet extends HttpServlet {
+
     @EJB
     private AdvertisementFacadeLocal advertisementFacade;
 
-    
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP
@@ -41,8 +41,7 @@ public class AdvertismentEditServlet extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException 
-    {
+            throws ServletException, IOException {
         if (request.getParameter("eId") == null) {
             response.sendRedirect("/Wetzelplaats-war/index");
             return;
@@ -50,11 +49,11 @@ public class AdvertismentEditServlet extends HttpServlet {
 
         Integer adId = Convert.tryParseInt((String) request.getParameter("eId"));
         Advertisement ad = advertisementFacade.find(adId);
-          
+
         request.setAttribute("ad", ad);
         request.getRequestDispatcher("/WEB-INF/advertisement/edit.jsp").forward(request, response);
     }
-    
+
     /**
      * Handles the HTTP
      * <code>POST</code> method.
@@ -72,33 +71,29 @@ public class AdvertismentEditServlet extends HttpServlet {
         String description = (String) request.getParameter("txtDescription");
         String priceStr = (String) request.getParameter("txtPrice");
         double price = Convert.tryParseDouble(priceStr);
-        
+
         ArrayList<String> errors = new ArrayList<String>();
-        
+
         int adId = Integer.parseInt(request.getParameter("ad"));
         Advertisement ad = advertisementFacade.find(adId);
-        
-        if (price == 0)
-        {
+
+        if (price == 0) {
             errors.add("Price must be higher than 0.");
         }
-        if ("".equals(title) || title == null)
-        {
+        if ("".equals(title) || title == null) {
             errors.add("Please enter a title.");
         }
-        if ("".equals(description) || description == null)
-        {
+        if ("".equals(description) || description == null) {
             errors.add("Please enter a description.");
-        }   
-        
-        if(errors.isEmpty())
-        {
+        }
+
+        if (errors.isEmpty()) {
             ad.setName(title);
             ad.setDescription(description);
             ad.setPrice(price);
             advertisementFacade.edit(ad);
         }
-        
+
         if (errors.size() > 0) {
             //don't forget to add the ad again
             request.setAttribute("ad", ad);

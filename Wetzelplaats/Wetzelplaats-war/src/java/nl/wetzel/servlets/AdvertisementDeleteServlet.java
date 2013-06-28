@@ -11,41 +11,38 @@ import nl.wetzel.entities.Advertisement;
 import nl.wetzel.facades.AdvertisementFacadeLocal;
 import nl.wetzel.facades.BidFacadeLocal;
 
-@WebServlet(name="AdvertisementDeleteServlet", urlPatterns={"/ad/delete"})
-public class AdvertisementDeleteServlet extends HttpServlet
-{
+@WebServlet(name = "AdvertisementDeleteServlet", urlPatterns = {"/ad/delete"})
+public class AdvertisementDeleteServlet extends HttpServlet {
 
-  @EJB
-  private AdvertisementFacadeLocal advertisementFacade;
+    @EJB
+    private AdvertisementFacadeLocal advertisementFacade;
+    @EJB
+    private BidFacadeLocal bidFacade;
 
-  @EJB
-  private BidFacadeLocal bidFacade;
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        int deleteId = Integer.parseInt(request.getParameter("did"));
+        int admin = Integer.parseInt(request.getParameter("admin"));
 
-  @Override
-  protected void doGet(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException
-  {
-    int deleteId = Integer.parseInt(request.getParameter("did"));
-    int admin = Integer.parseInt(request.getParameter("admin"));
+        Advertisement ad = this.advertisementFacade.find(Integer.valueOf(deleteId));
+        this.bidFacade.deleteByAdId(ad);
 
-    Advertisement ad = this.advertisementFacade.find(Integer.valueOf(deleteId));
-    this.bidFacade.deleteByAdId(ad);
+        this.advertisementFacade.deleteById(deleteId);
 
-    this.advertisementFacade.deleteById(deleteId);
-
-    if (admin == 0)
-      response.sendRedirect("/Wetzelplaats-war/account");
-    else
-      response.sendRedirect("/Wetzelplaats-war/admin");
-  }
+        if (admin == 0) {
+            response.sendRedirect("/Wetzelplaats-war/account");
+        } else {
+            response.sendRedirect("/Wetzelplaats-war/admin");
+        }
+    }
 
     /**
      *
      * @return
      */
     @Override
-  public String getServletInfo()
-  {
-    return "Short description";
-  }
+    public String getServletInfo() {
+        return "Short description";
+    }
 }

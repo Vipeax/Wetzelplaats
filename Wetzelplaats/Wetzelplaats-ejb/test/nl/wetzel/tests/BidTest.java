@@ -50,7 +50,7 @@ public class BidTest {
 
         advertisementFacade = new AdvertisementFacade();
         advertisementFacade.setEm(em);
-        
+
         bidFacade = new BidFacade();
         bidFacade.setEm(em);
         bidFacade.setAdvertisementFacade(advertisementFacade);
@@ -108,15 +108,15 @@ public class BidTest {
         Bid bidExpected = new Bid();
         User userExpected = new User();
         Advertisement adExpected = new Advertisement();
-        
+
         bidExpected.setPrice(price);
         bidExpected.setAdvertisementId(adExpected);
         bidExpected.setUserId(userExpected);
-        
+
         List<Bid> bidList = new LinkedList<Bid>();
         bidList.add(bidExpected);
         adExpected.setBidCollection(bidList);
-        
+
         //verify the stubs
         verify(em).merge(ad);
         verify(em).persist(bidStub);

@@ -41,10 +41,13 @@ public interface AdvertisementFacadeLocal {
     public Advertisement createAdvertisement(String title, String description, double price, User user);
 
     public Advertisement addBid(Advertisement ad, Bid bid);
-    
+
     //Robert J
     public List<Advertisement> findByUserId(User user);
+
     public int deleteById(int id);
+
     public int deleteByUserId(User user);
+
     public Advertisement removeBid(Advertisement ad, Bid bid);
 }
