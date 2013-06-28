@@ -16,6 +16,10 @@
     background-color:#dceaf4;
 }
 
+.create {
+    padding:10px;
+}
+
 .body > div {
     margin-left:10px;
 }
@@ -27,5 +31,10 @@
 .bid-container {
     height:200px;
     overflow:auto;
+}
+
+div > label {
+    display:inline-block;
+    width:100px;
 }
 

@@ -112,6 +112,7 @@ public class UserFacade extends AbstractFacade<User> implements UserFacadeLocal 
         return result;
     }
     
+    //Robert J
     @Override
     public int deleteById(int id)
     {
