@@ -129,7 +129,6 @@ i.less {
 .loginBox {
     width: 500px;
     margin: 200px auto;
-    border: 1px solid #010000;
 }
 
 .loginBox form > div, .loginBox h2, .create form > div {

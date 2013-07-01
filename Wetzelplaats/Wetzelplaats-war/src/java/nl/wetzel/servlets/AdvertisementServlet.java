@@ -13,6 +13,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import nl.wetzel.custom.Convert;
 import nl.wetzel.entities.Advertisement;
 import nl.wetzel.entities.Bid;
@@ -50,6 +51,16 @@ public class AdvertisementServlet extends HttpServlet {
             response.sendRedirect("/Wetzelplaats-war/index");
             return;
         }
+        
+        String referer = request.getHeader("Referer");
+        if(referer != null)
+        {
+            request.setAttribute("referer", referer);
+        }
+        else
+        {
+            request.setAttribute("referer", "/Wetzelplaats-war/");
+        }
 
         Integer adId = Convert.tryParseInt((String) request.getParameter("id"));
 
@@ -59,6 +70,16 @@ public class AdvertisementServlet extends HttpServlet {
 
         request.setAttribute("ad", ad);
         request.setAttribute("ad.bidCollection", bidCollection);
+        
+         HttpSession session = request.getSession();
+        
+        Boolean success = (Boolean) session.getAttribute("success");
+
+        if (success != null && success) {
+            request.setAttribute("success", true);
+            session.setAttribute("success", null);
+        }
+        
         request.getRequestDispatcher("/WEB-INF/advertisement/view.jsp").forward(request, response);
     }
 

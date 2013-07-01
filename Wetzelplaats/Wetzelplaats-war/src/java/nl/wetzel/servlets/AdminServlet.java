@@ -3,13 +3,14 @@ package nl.wetzel.servlets;
 import java.io.IOException;
 import java.util.List;
 import javax.ejb.EJB;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import nl.wetzel.custom.Convert;
+import nl.wetzel.entities.User;
 import nl.wetzel.facades.AdvertisementFacadeLocal;
 import nl.wetzel.facades.UserFacadeLocal;
 
@@ -20,12 +21,6 @@ public class AdminServlet extends HttpServlet {
     private AdvertisementFacadeLocal advertisementFacade;
     @EJB
     private UserFacadeLocal userFacade;
-
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        Integer pageIndex = Convert.tryParseInt(request.getParameter("p"));
-        int adCount = this.advertisementFacade.count();
 
   @Override
   protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -46,6 +41,19 @@ public class AdminServlet extends HttpServlet {
       request.setAttribute("ads", ads);
       request.setAttribute("userCount", Integer.valueOf(userCount));
       request.setAttribute("users", users);
+      
+       HttpSession session = request.getSession();
+        
+       User u = (User) session.getAttribute("user");
+       
+       request.setAttribute("currentUser", u.getId());
+       
+        Boolean success = (Boolean) session.getAttribute("success");
+
+        if (success != null && success) {
+            request.setAttribute("success", true);
+            session.setAttribute("success", null);
+        }
 
       request.getRequestDispatcher("/WEB-INF/admin/admin.jsp").forward(request, response);
   }

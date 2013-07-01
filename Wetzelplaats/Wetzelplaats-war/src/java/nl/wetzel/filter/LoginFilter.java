@@ -5,9 +5,6 @@
 package nl.wetzel.filter;
 
 import java.io.IOException;
-import java.io.PrintStream;
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -17,12 +14,13 @@ import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import nl.wetzel.entities.User;
 
 /**
  *
  * @author Timo
  */
-@WebFilter(filterName = "LoginFilter", urlPatterns = {"/ad/*"})
+@WebFilter(filterName = "LoginFilter", urlPatterns = {"/ad/*", "/admin/*"})
 public class LoginFilter implements Filter {
 
     /**
@@ -41,7 +39,9 @@ public class LoginFilter implements Filter {
         HttpServletRequest httpRequest = (HttpServletRequest) request;
         HttpServletResponse httpResponse = (HttpServletResponse) response;
 
-        if (httpRequest.getSession().getAttribute("user") == null) {
+        User u = (User) httpRequest.getSession().getAttribute("user");
+        
+        if (u == null) {
 
             if (httpRequest.getQueryString() == null) {
                 //save the request path            
@@ -51,7 +51,13 @@ public class LoginFilter implements Filter {
             }
 
             httpResponse.sendRedirect("/Wetzelplaats-war/login");
-        } else {
+        } 
+        else if (u.getUserType() != User.UserType.Admin && httpRequest.getServletPath().contains("admin"))
+        {
+            httpResponse.sendRedirect("/Wetzelplaats-war/index");
+        }
+        else 
+        {
             chain.doFilter(request, response);
         }
     }

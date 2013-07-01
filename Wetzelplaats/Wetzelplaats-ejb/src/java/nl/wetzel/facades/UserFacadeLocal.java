@@ -15,6 +15,8 @@ import nl.wetzel.entities.User;
  */
 @Local
 public interface UserFacadeLocal {
+    
+    String hashpwd(String pwd);
 
     void create(User user);
 

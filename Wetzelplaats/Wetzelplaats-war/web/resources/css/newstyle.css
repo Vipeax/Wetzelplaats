@@ -20,6 +20,18 @@
     padding:10px;
 }
 
+.edit {
+    padding:10px;
+}
+
+.login{
+    padding:10px;
+}
+
+.register{
+    padding:10px;
+}
+
 .body > div {
     margin-left:10px;
 }
@@ -37,4 +49,15 @@ div > label {
     display:inline-block;
     width:100px;
 }
+
+div.advertisement {
+    display: table;
+    width: 100%;
+}
+div.advertisement span{
+    display: table-cell;
+    text-align: center;
+}
+
+
 

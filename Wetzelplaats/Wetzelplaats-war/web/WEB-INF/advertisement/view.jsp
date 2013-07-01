@@ -7,11 +7,20 @@
         </ul>
     </div>
 </c:if>
+<c:if test="${success}">
+    <div class="alert alert-success">
+        <ul>
+            <li>Changes saved!</li>
+        </ul>
+    </div>
+</c:if>
+
 
 <!--<div class="adv-block fll">-->
 <div class="container">
-    <div class="row">
-        <div class="span2 body" style="background-color:#bbd8e9;">
+    <div class="advertisement rounded body">
+       
+         <div style="float:left;margin: 10px">
             <div>
                 <h3>${ad.name}</h3>
             </div>
@@ -22,7 +31,8 @@
                 <div>
                     <b>Created by:</b>
                 </div>
-                ${ad.userId.firstname}
+                <a href="/Wetzelplaats-war/user/view?id=${ad.userId.id}">${ad.userId.firstname}</a>
+                
             </div>
 
             <div class="description">
@@ -51,14 +61,16 @@
                 <div class="clear"></div>
             </div>
         </div>
-        <div class="span4 offset3 rounded body">
+        
+        
+        <div class="span4 offset3 rounded body" style="float: right;margin: 10px;background-color:#bbd8e9;">
             <div class="row">
                 <h2>Bids</h2>
             </div>
             <div class="row bid-container ">
                 <ul>
                     <c:forEach var="bid" items="${ad.bidCollection}">
-                        <li><b>$${bid.price}</b> <i class="less">by ${bid.userId.firstname}</i></li>
+                        <li><b>$${bid.price}</b> <i class="less">by <a href="/Wetzelplaats-war/user/view?id=${bid.userId.id}">${bid.userId.firstname}</a></i></li>
                         </c:forEach>
                 </ul>                
             </div>
@@ -66,7 +78,7 @@
                 <form action="/Wetzelplaats-war/ad/view" method="POST">
                     <input type="hidden" value="${ad.id}" name="ad" />
                     <input type="text" name="txtBid" />
-                    <input type="submit" name="btnSubmit" value="Place bid"/>
+                    <input type="submit" name="btnSubmit" value="Place bid" class="btn-link"/> <a href="${referer}" >Return</a>
                 </form>
             </div>
         </div>

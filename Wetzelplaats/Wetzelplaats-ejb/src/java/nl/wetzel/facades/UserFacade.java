@@ -124,6 +124,12 @@ public class UserFacade extends AbstractFacade<User> implements UserFacadeLocal 
             return -1;
         }
     }
+    
+    @Override
+    public String hashpwd(String pwd) 
+    {
+        return BCrypt.hashpw(pwd, BCrypt.gensalt());
+    }
 
     //<editor-fold defaultstate="collapsed" desc="getters/setters">
     @Override

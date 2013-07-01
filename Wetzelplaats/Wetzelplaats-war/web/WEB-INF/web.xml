@@ -20,11 +20,12 @@
         <jsp-property-group>
             <description>The main pages</description>
             <display-name>Main, Advertisement</display-name>
+            <url-pattern>/WEB-INF/user/*</url-pattern>
             <url-pattern>/index.jsp</url-pattern>
+            <url-pattern>/WEB-INF/account/*</url-pattern>
             <url-pattern>/WEB-INF/advertisement/*</url-pattern>
             <!--Robert J -->
             <url-pattern>/WEB-INF/admin/*</url-pattern>
-            <url-pattern>/WEB-INF/account/*</url-pattern>
             <include-prelude>/WEB-INF/jspf/header.jspf</include-prelude>
             <include-coda>/WEB-INF/jspf/footer.jspf</include-coda>
         </jsp-property-group>

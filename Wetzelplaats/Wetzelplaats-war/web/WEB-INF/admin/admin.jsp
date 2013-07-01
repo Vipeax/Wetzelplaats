@@ -2,14 +2,19 @@
     Document   : admin
     Created on : Jun 27, 2013, 9:07:41 PM
     Author     : Robert
+    Modified   : R. Wetzels
 --%>
 
-<!-- TODO: User list shows current user as well. Make sure to filter this user so that you cannot delete yourself-->
-
+<c:if test="${success}">
+    <div class="alert alert-success">
+        <ul>
+            <li>Changes saved!</li>
+        </ul>
+    </div>
+</c:if>
 
 <div class="body rounded">
-    <!--<div class="ad-container"> -->
-    <div class="row-fluid">
+    <div class="row-fluid">               
         <h3>Ad management</h3>
         <c:choose>
             <c:when test="${adCount == 0}">
@@ -91,7 +96,11 @@
             <div class="span3">
                 <b>${user.firstname} ${user.lastname}</b><br/>
                 <i>${user.email}</i>
+                <c:choose>
+                <c:when test="${currentUser!=user.id}">
                 <a href="/Wetzelplaats-war/user/delete?did=${user.id}&admin=1">Delete</a>
+                </c:when>
+                </c:choose>
                 <a href="/Wetzelplaats-war/user/edit?id=${user.id}">Edit</a>
             </div>
         </c:forEach>            
@@ -108,7 +117,7 @@
                             ${loop.index + 1}
                         </c:when>
                         <c:otherwise>
-                            <a href="/Wetzelplaats-war/admin?pu=${loop.index}&pa=${pa}>${loop.index + 1}</a>
+                            <a href="/Wetzelplaats-war/admin?pu=${loop.index}&pa=${pa}>${loop.index + 1}"</a>
                         </c:otherwise>
                     </c:choose>
                 </c:forEach>

@@ -16,5 +16,5 @@
         <link rel="stylesheet" type="text/css" href="/Wetzelplaats-war/resources/css/bootstrap.min.css"/>
         <link rel="stylesheet" type="text/css" href="/Wetzelplaats-war/resources/css/newstyle.css"/>
     </head>
-    <body>
+    <body>                      
         <div class="loginBox">

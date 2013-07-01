@@ -6,7 +6,6 @@ package nl.wetzel.servlets;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,13 +14,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import nl.wetzel.custom.Convert;
 import nl.wetzel.entities.Advertisement;
-import nl.wetzel.entities.Bid;
-import nl.wetzel.entities.User;
 import nl.wetzel.facades.AdvertisementFacadeLocal;
 
 /**
  *
  * @author Robert
+ * Modified : Roger
  */
 @WebServlet(name = "AdvertismentEditServlet", urlPatterns = {"/ad/edit"})
 public class AdvertismentEditServlet extends HttpServlet {
@@ -70,7 +68,8 @@ public class AdvertismentEditServlet extends HttpServlet {
         String title = (String) request.getParameter("txTitle");
         String description = (String) request.getParameter("txtDescription");
         String priceStr = (String) request.getParameter("txtPrice");
-        double price = Convert.tryParseDouble(priceStr);
+        double price = Convert.tryParseDouble(priceStr);        
+        boolean isSold = (null != request.getParameter("isSold"));
 
         ArrayList<String> errors = new ArrayList<String>();
 
@@ -86,23 +85,41 @@ public class AdvertismentEditServlet extends HttpServlet {
         if ("".equals(description) || description == null) {
             errors.add("Please enter a description.");
         }
-
-        if (errors.isEmpty()) {
-            ad.setName(title);
-            ad.setDescription(description);
-            ad.setPrice(price);
-            advertisementFacade.edit(ad);
+        
+        try
+        {       
+            if (errors.isEmpty()) 
+            {
+                ad.setName(title);
+                ad.setDescription(description);
+                ad.setPrice(price);
+                ad.setIsSold(isSold);
+                advertisementFacade.edit(ad);
+            }
         }
-
-        if (errors.size() > 0) {
-            //don't forget to add the ad again
-            request.setAttribute("ad", ad);
-            request.setAttribute("errors", errors);
-            request.getRequestDispatcher("/WEB-INF/advertisement/edit.jsp").forward(request, response);
-        } else {
-            //success, redirect instead of dispatcher
-            response.sendRedirect("/Wetzelplaats-war/ad/view?id=" + ad.getId());
+        catch (RuntimeException ex)
+        {
+            errors.add("Something went wrong. Please contact support.");
         }
+        finally
+        {
+            if (errors.size() > 0) 
+            {
+                showError(request, response, adId, title, description, price, isSold, ad.getEPriceType(), errors);
+                return;
+            }         
+        }   
+        
+        request.getSession().setAttribute("success", true);
+        response.sendRedirect("/Wetzelplaats-war/ad/view?id=" + ad.getId());
+    }
+    
+      private void showError(HttpServletRequest request, HttpServletResponse response, int id, String name, String description, double price, boolean issold, int epricetype, ArrayList<String> errors) throws ServletException, IOException 
+      {
+        Advertisement ad = new Advertisement(id, name, description, price, issold, epricetype);
+        request.setAttribute("ad", ad);
+        request.setAttribute("errors", errors);
+        request.getRequestDispatcher("/WEB-INF/advertisement/edit.jsp").forward(request, response);
     }
 
     /**
