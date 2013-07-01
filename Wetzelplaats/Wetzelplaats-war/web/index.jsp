@@ -5,16 +5,10 @@
 --%>
 
 <div class="body rounded">
-    <div class="row">
-        <div class="span12">
-            <a href="ad/create">Create ad</a>
-        </div>
-    </div>
-
     <!--<div class="ad-container"> -->
     <div class="row-fluid">
         <c:choose>
-            <c:when test="${adCount == 0}">
+            <c:when test="${adCount <= 0}">
                 <p>No ads found. How about you <a href="ad/create">create an ad</a>?</p>
             </c:when>
             <c:otherwise>
@@ -47,12 +41,15 @@
                                 <b>Current bid:</b>
                                 <p> 
                                     <c:choose>
-                                        <c:when test="${ad.bidCollection.isEmpty()}">
-                                            N.A.
+                                        <c:when test="${ad.isSold}">
+                                            <img src="/Wetzelplaats-war/resources/img/icon-sold.png" alt="Sold" height="48" width="64">
                                         </c:when>
+                                        <c:when test="${ad.bidCollection.isEmpty()}">
+                                            No bids yet
+                                        </c:when>                                            
                                         <c:otherwise>
                                             $${ad.bidCollection.get(0).price}
-                                        </c:otherwise>
+                                        </c:otherwise>                                            
                                     </c:choose>
                                 </p>
                             </div>

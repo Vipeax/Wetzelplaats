@@ -33,17 +33,20 @@ public class UserDeleteServlet extends HttpServlet {
 
         // Advertisement ad = bid.getAdvertisementId();
         //   this.advertisementFacade.removeBid(ad, bid);
-
-        List<Bid> bids = bidFacade.findByUserId(user);
-
-        for (Bid bid : bids) {
-            Advertisement ad = bid.getAdvertisementId();
-            ad.getBidCollection().remove(bid);
-            advertisementFacade.edit(ad);
-        }
+       
+        bidFacade.deleteByUserId(user);
+        
+        List<Advertisement> ads = advertisementFacade.findByUserId(user);
+        
+        for(Advertisement ad : ads)
+        {
+            bidFacade.deleteByAdId(ad);
+        }        
 
         this.advertisementFacade.deleteByUserId(user);
+        
         this.userFacade.deleteById(deleteId);
+                
         response.sendRedirect("/Wetzelplaats-war/admin");
     }
 

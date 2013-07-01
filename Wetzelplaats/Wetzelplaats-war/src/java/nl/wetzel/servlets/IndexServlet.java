@@ -15,6 +15,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import nl.wetzel.facades.AdvertisementFacadeLocal;
 import nl.wetzel.custom.*;
 import nl.wetzel.entities.Advertisement;
@@ -42,9 +43,25 @@ public class IndexServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
+        HttpSession session = request.getSession();
+        
+        String oldreferer = (String) session.getAttribute("oldreferer");
+               
+        if(oldreferer != null)
+        {
+            session.setAttribute("oldreferer", null);
+        }
+               
+        
         //try get pageIndex from queryString
         Integer pageIndex = Convert.tryParseInt((String) request.getParameter("p"));
         int adCount = advertisementFacade.count();
+        
+        if(adCount%4 == 0)
+        {
+            adCount -= 1;
+        }
 
         //amount = 4 because it's nice to have 4 ads on the page
         List<Advertisement> ads = advertisementFacade.findByLimit(pageIndex, 4);

@@ -31,6 +31,8 @@ public class AdvertisementFacade extends AbstractFacade<Advertisement> implement
     public static final String FIND_BY_USER_ID = "Advertisement.findByUserId";
     public static final String DELETE_BY_ID = "Advertisement.deleteById";
     public static final String DELETE_BY_USER_ID = "Advertisement.deleteByUserId";
+    //R. Wetzels
+    public static final String FIND_BY_LIMIT_AND_USER_ID ="Advertisement.findByLimitAndUser";
     @PersistenceContext(unitName = "Wetzelplaats-ejbPU")
     private EntityManager em;
 
@@ -56,6 +58,20 @@ public class AdvertisementFacade extends AbstractFacade<Advertisement> implement
         q.setMaxResults(amount);
         q.setFirstResult(pageIndex * amount);
 
+        result = q.getResultList();
+
+        return result;
+    }
+    
+    @Override
+    public List<Advertisement> findByLimitAndUser(Integer pageIndex, Integer amount, User user)
+    {
+        List<Advertisement> result;
+        
+        Query q = em.createNamedQuery(AdvertisementFacade.FIND_BY_LIMIT_AND_USER_ID, Advertisement.class);
+        q.setMaxResults(amount);
+        q.setFirstResult(pageIndex * amount);
+        q.setParameter("userId", user);
         result = q.getResultList();
 
         return result;

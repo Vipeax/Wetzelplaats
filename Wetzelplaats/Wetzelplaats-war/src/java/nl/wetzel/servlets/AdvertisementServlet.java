@@ -52,14 +52,20 @@ public class AdvertisementServlet extends HttpServlet {
             return;
         }
         
-        String referer = request.getHeader("Referer");
-        if(referer != null)
+        HttpSession session = request.getSession();
+        
+        String oldreferer = (String) session.getAttribute("oldreferer");
+               
+        if(oldreferer != null)
         {
-            request.setAttribute("referer", referer);
+            request.setAttribute("referer", oldreferer);
         }
         else
         {
-            request.setAttribute("referer", "/Wetzelplaats-war/");
+            String referer = request.getHeader("Referer");
+            request.setAttribute("referer", referer);
+            session.setAttribute("oldreferer", referer);
+            //session.setAttribute("requesturl", referer);
         }
 
         Integer adId = Convert.tryParseInt((String) request.getParameter("id"));
@@ -69,9 +75,7 @@ public class AdvertisementServlet extends HttpServlet {
         List<Bid> bidCollection = bidFacade.findByAdvertisementId(adId);
 
         request.setAttribute("ad", ad);
-        request.setAttribute("ad.bidCollection", bidCollection);
-        
-         HttpSession session = request.getSession();
+        request.setAttribute("ad.bidCollection", bidCollection);        
         
         Boolean success = (Boolean) session.getAttribute("success");
 

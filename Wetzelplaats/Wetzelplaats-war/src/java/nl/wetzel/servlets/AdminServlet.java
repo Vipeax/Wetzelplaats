@@ -26,23 +26,41 @@ public class AdminServlet extends HttpServlet {
   protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException
   {
+      HttpSession session = request.getSession();
+        
+      String oldreferer = (String) session.getAttribute("oldreferer");
+               
+      if(oldreferer != null)
+      {
+          session.setAttribute("oldreferer", null);
+      }
+      
+      
       Integer pageIndexAd = Convert.tryParseInt(request.getParameter("pa"));
       Integer pageIndexUser = Convert.tryParseInt(request.getParameter("pu"));
       int adCount = this.advertisementFacade.count();
+      
+      if(adCount%4 == 0)
+      {
+          adCount -= 1;
+      }
 
       List ads = this.advertisementFacade.findByLimit(pageIndexAd, Integer.valueOf(4));
 
       int userCount = this.userFacade.count();
       List users = this.userFacade.findByLimit(pageIndexUser, Integer.valueOf(4));
+      
+      if(userCount%4 == 0)
+      {
+          userCount -= 1;
+      }
 
       request.setAttribute("pa", pageIndexAd);
       request.setAttribute("pu", pageIndexUser);
       request.setAttribute("adCount", Integer.valueOf(adCount));
       request.setAttribute("ads", ads);
       request.setAttribute("userCount", Integer.valueOf(userCount));
-      request.setAttribute("users", users);
-      
-       HttpSession session = request.getSession();
+      request.setAttribute("users", users);      
         
        User u = (User) session.getAttribute("user");
        

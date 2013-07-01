@@ -2,17 +2,21 @@
     Document   : account
     Created on : Jun 27, 2013, 9:07:04 PM
     Author     : Robert J
+    Modifie    : R. Wetzels
 --%>
 
 <div class="body rounded">
-    <!--<div class="ad-container"> -->
     <div class="row-fluid">
         <h3>Ad management</h3>
         <c:choose>
-            <c:when test="${adCount == 0}">
+            <c:when test="${adCount <= 0}">
                 <p>You do not have any ads yet. How about you <a href="/Wetzelplaats-war/ad/create">create an ad</a>?</p>
             </c:when>
             <c:otherwise>
+                <div class="span12">
+                    <a href="ad/create">Create ad</a>
+                </div>                
+                <div class="row-fluid">
                 <c:forEach var="ad" items="${ads}">
                     <!--<div class="adv-block fll"> -->
                     <div class="span3">
@@ -43,9 +47,12 @@
                                 <b>Current bid:</b>
                                 <p> 
                                     <c:choose>
-                                        <c:when test="${ad.bidCollection.isEmpty()}">
-                                            N.A.
+                                        <c:when test="${ad.isSold}">
+                                            <img src="/Wetzelplaats-war/resources/img/icon-sold.png" alt="Sold" height="48" width="64">
                                         </c:when>
+                                        <c:when test="${ad.bidCollection.isEmpty()}">
+                                            No bids yet
+                                        </c:when>      
                                         <c:otherwise>
                                             $${ad.bidCollection.get(0).price}
                                         </c:otherwise>
@@ -55,25 +62,27 @@
                             <div class="clear"></div>
                         </div>
                     </div>
-                </c:forEach>            
+                </c:forEach>     
+                    </div>
                 <!--<div class="clear"></div> -->
 
                 <div class="row">
-                    <div class="span12 paging">
-                        <c:forEach begin="0" end="${adCount / 4}" varStatus="loop">
+                    <div class="span12 paging">                        
+                        <c:forEach begin="0" end="${adCount/ 4}" varStatus="loop">
                             <c:choose>
-                                <c:when test="${loop.index == 0 && (p == null || p == 0)}">
+                                
+                                <c:when test="${loop.index == 0 && (pa == null || pa == 0)}">
                                     ${loop.index + 1}
                                 </c:when>
-                                <c:when test="${loop.index != 0 && (p != null && p == loop.index)}">
+                                <c:when test="${loop.index != 0 && (pa != null && pa == loop.index)}">
                                     ${loop.index + 1}
                                 </c:when>
                                 <c:otherwise>
-                                    <a href="/Wetzelplaats-war/index?p=${loop.index}">${loop.index + 1}</a>
+                                    <a href="/Wetzelplaats-war/account?pa=${loop.index}&pb=${pb}">${loop.index + 1}</a>
                                 </c:otherwise>
                             </c:choose>
                         </c:forEach>
-                    </div>
+                      </div>
                 </div>
             </c:otherwise>
         </c:choose>
@@ -84,11 +93,12 @@
     <!--<div class="ad-container"> -->
     <div class="row-fluid">
         <h3>Bid management</h3>
-        <c:choose>
-            <c:when test="${bidCount == 0}">
+        <c:choose>                       
+            <c:when test="${bidCount <= 0}">
                 <p>You do not have any bids yet. How about you <a href="/Wetzelplaats-war/">start bidding</a>?</p>
             </c:when>
             <c:otherwise>
+                <div class="row-fluid">
                 <c:forEach var="bid" items="${bids}">
                     <!--<div class="adv-block fll"> -->
                     <div class="span3">
@@ -97,20 +107,21 @@
                         <a href="/Wetzelplaats-war/bid/delete?bId=${bid.id}">Delete</a>
                     </div>
                 </c:forEach>            
+                    </div>
                 <!--<div class="clear"></div> -->
 
                 <div class="row">
                     <div class="span12 paging">
-                        <c:forEach begin="0" end="${bidCount / 4}" varStatus="loop">
+                        <c:forEach begin="0" end="${(bidCount / 4)}" varStatus="loop">
                             <c:choose>
-                                <c:when test="${loop.index == 0 && (p == null || p == 0)}">
+                                <c:when test="${loop.index == 0 && (pb == null || pb == 0)}">
                                     ${loop.index + 1}
                                 </c:when>
-                                <c:when test="${loop.index != 0 && (p != null && p == loop.index)}">
+                                <c:when test="${loop.index != 0 && (pb != null && pb == loop.index)}">
                                     ${loop.index + 1}
                                 </c:when>
                                 <c:otherwise>
-                                    <a href="/Wetzelplaats-war/account?p=${loop.index}">${loop.index + 1}</a>
+                                    <a href="/Wetzelplaats-war/account?pa=${pa}&pb=${loop.index}">${loop.index + 1}</a>
                                 </c:otherwise>
                             </c:choose>
                         </c:forEach>

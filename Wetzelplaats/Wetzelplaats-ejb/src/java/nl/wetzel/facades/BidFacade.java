@@ -4,7 +4,6 @@
  */
 package nl.wetzel.facades;
 
-import java.util.Collections;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -28,6 +27,8 @@ public class BidFacade extends AbstractFacade<Bid> implements BidFacadeLocal {
     public final static String DELETE_BY_ID = "Bid.deleteById";
     public final static String DELETE_BY_USER_ID = "Bid.deleteByUserId";
     public final static String DELETE_BY_ADVERTISEMENT_ID = "Bid.deleteByAdvertisementId";
+    //R. Wetzels
+    public static final String FIND_BY_LIMIT_AND_USER_ID ="Bid.findByLimitAndUser";
     @PersistenceContext(unitName = "Wetzelplaats-ejbPU")
     private EntityManager em;
     @EJB
@@ -141,5 +142,19 @@ public class BidFacade extends AbstractFacade<Bid> implements BidFacadeLocal {
         } catch (RuntimeException e) {
             return -1;
         }
+    }
+
+    @Override
+    public List<Bid> findByLimitAndUser(Integer pageIndex, Integer amount, User user) 
+    {
+        List<Bid> result;
+        
+        Query q = em.createNamedQuery(BidFacade.FIND_BY_LIMIT_AND_USER_ID, Bid.class);
+        q.setMaxResults(amount);
+        q.setFirstResult(pageIndex * amount);
+        q.setParameter("userId", user);
+        result = q.getResultList();
+
+        return result;
     }
 }

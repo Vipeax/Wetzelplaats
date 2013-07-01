@@ -43,7 +43,7 @@
             <div class="price">
                 <div class="fll">
                     <b>Price:</b>
-                    <p>$${ad.price}</p>                            
+                    <p>$${ad.price}</p>                
                 </div>
                 <div class="flr">
                     <!--<b>Current bid:</b>
@@ -74,12 +74,22 @@
                         </c:forEach>
                 </ul>                
             </div>
-            <div class="row">
-                <form action="/Wetzelplaats-war/ad/view" method="POST">
-                    <input type="hidden" value="${ad.id}" name="ad" />
-                    <input type="text" name="txtBid" />
-                    <input type="submit" name="btnSubmit" value="Place bid" class="btn-link"/> <a href="${referer}" >Return</a>
-                </form>
+            <div class="row">                
+              <c:choose>
+                    <c:when test="${ad.isSold}">                                                
+                        <p>We're sorry this advertisement has already been sold. You can still contact the advertiser for any inquiries.</p>
+                        <a href="${referer}" >Return</a>
+                    </c:when>
+                    <c:otherwise>
+                        <form action="/Wetzelplaats-war/ad/view" method="POST">
+                            <input type="hidden" value="${ad.id}" name="ad" />
+                            <input type="text" name="txtBid" />
+                            <input type="submit" name="btnSubmit" value="Place bid" class="btn-link"/> <a href="${referer}" >Return</a>
+                        </form>
+                    </c:otherwise>
+                </c:choose>
+                
+                
             </div>
         </div>
     </div>

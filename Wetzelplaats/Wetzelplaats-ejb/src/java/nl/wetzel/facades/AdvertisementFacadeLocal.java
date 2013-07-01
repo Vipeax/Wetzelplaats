@@ -33,6 +33,8 @@ public interface AdvertisementFacadeLocal {
     List<Advertisement> findRange(int[] range);
 
     List<Advertisement> findByLimit(Integer pageIndex, Integer amount);
+    
+    List<Advertisement> findByLimitAndUser(Integer pageIndex, Integer amount, User user);
 
     int count();
 

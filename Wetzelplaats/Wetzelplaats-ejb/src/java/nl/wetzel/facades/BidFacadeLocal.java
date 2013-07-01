@@ -42,6 +42,9 @@ public interface BidFacadeLocal {
 
     //Robert J
     public List<Bid> findByUserId(User user);
+    
+    //R. Wetzels
+    List<Bid> findByLimitAndUser(Integer pageIndex, Integer amount, User user);                        
 
     public int deleteById(int id);
 
