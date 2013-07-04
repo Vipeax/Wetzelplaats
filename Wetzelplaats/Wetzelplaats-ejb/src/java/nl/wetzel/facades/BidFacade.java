@@ -85,6 +85,11 @@ public class BidFacade extends AbstractFacade<Bid> implements BidFacadeLocal {
     }
 
     //Robert J
+                /**
+     * Finds bid by advertisement id
+     *
+     * @return a list containing bids
+     */
     @Override
     public List<Bid> findByAdvertisementId(int advertisementId) {
         try {
@@ -97,6 +102,11 @@ public class BidFacade extends AbstractFacade<Bid> implements BidFacadeLocal {
         }
     }
 
+                    /**
+     * Finds bid by user id
+     *
+     * @return a list containing bids
+     */
     @Override
     public List<Bid> findByUserId(User user) {
         List<Bid> result;
@@ -108,11 +118,16 @@ public class BidFacade extends AbstractFacade<Bid> implements BidFacadeLocal {
         return result;
     }
 
+                    /**
+     * Deletes bid by id
+     *
+     * @return 1: successful / -1: unsuccessful
+     */
     @Override
-    public int deleteById(int id) {
+    public int deleteById(Bid bid) {
         try {
             Query q = em.createNamedQuery(BidFacade.DELETE_BY_ID, Bid.class);
-            q.setParameter("bidId", id);
+            q.setParameter("bidId", bid);
             q.executeUpdate();
             return 1;
         } catch (RuntimeException e) {
@@ -120,6 +135,11 @@ public class BidFacade extends AbstractFacade<Bid> implements BidFacadeLocal {
         }
     }
 
+                        /**
+     * Deletes bid by advertisement id
+     *
+     * @return 1: successful / -1: unsuccessful
+     */
     @Override
     public int deleteByAdId(Advertisement ad) {
         try {
@@ -132,6 +152,11 @@ public class BidFacade extends AbstractFacade<Bid> implements BidFacadeLocal {
         }
     }
 
+                        /**
+     * Deletes bid by user id
+     *
+     * @return 1: successful / -1: unsuccessful
+     */
     @Override
     public int deleteByUserId(User user) {
         try {
@@ -144,6 +169,11 @@ public class BidFacade extends AbstractFacade<Bid> implements BidFacadeLocal {
         }
     }
 
+         /**
+     * Finds bids by limit and user
+     *
+     * @return a list containing bids
+     */
     @Override
     public List<Bid> findByLimitAndUser(Integer pageIndex, Integer amount, User user) 
     {

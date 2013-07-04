@@ -25,33 +25,59 @@ public class UserDeleteServlet extends HttpServlet {
     @EJB
     private AdvertisementFacadeLocal advertisementFacade;
 
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    /**
+     * Handles the HTTP
+     * <code>GET</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        int deleteId = Integer.parseInt(request.getParameter("did"));
-        User user = this.userFacade.find(Integer.valueOf(deleteId));
-
-        // Advertisement ad = bid.getAdvertisementId();
-        //   this.advertisementFacade.removeBid(ad, bid);
-       
-        bidFacade.deleteByUserId(user);
+            throws ServletException, IOException 
+    {
+        if (request.getParameter("did") == null) {
+            response.sendRedirect("/Wetzelplaats-war/admin");
+            return;
+        }
         
-        List<Advertisement> ads = advertisementFacade.findByUserId(user);
+        User userReq = (User) request.getSession().getAttribute("user");
         
-        for(Advertisement ad : ads)
+        if (userReq.getUserType() == User.UserType.Admin) 
         {
-            bidFacade.deleteByAdId(ad);
-        }        
+            int deleteId = Integer.parseInt(request.getParameter("did"));
+            User user = this.userFacade.find(Integer.valueOf(deleteId));
 
-        this.advertisementFacade.deleteByUserId(user);
-        
-        this.userFacade.deleteById(deleteId);
-                
-        response.sendRedirect("/Wetzelplaats-war/admin");
+            // Advertisement ad = bid.getAdvertisementId();
+            //   this.advertisementFacade.removeBid(ad, bid);
+
+            bidFacade.deleteByUserId(user);
+
+            List<Advertisement> ads = advertisementFacade.findByUserId(user);
+
+            for(Advertisement ad : ads)
+            {
+                bidFacade.deleteByAdId(ad);
+            }        
+
+            this.advertisementFacade.deleteByUserId(user);
+
+            this.userFacade.deleteById(deleteId);
+
+            response.sendRedirect("/Wetzelplaats-war/admin");
+        }
     }
 
+        /**
+     * Returns a short description of the servlet.
+     *
+     * @return a String containing servlet description
+     */
     @Override
     public String getServletInfo() {
-        return "Short description";
+        return "Handles user deletion";
     }
 }

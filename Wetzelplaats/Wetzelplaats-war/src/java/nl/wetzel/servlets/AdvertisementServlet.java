@@ -144,6 +144,6 @@ public class AdvertisementServlet extends HttpServlet {
      */
     @Override
     public String getServletInfo() {
-        return "Short description";
+        return "Gathers advertisments";
     }// </editor-fold>
 }

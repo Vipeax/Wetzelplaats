@@ -5,10 +5,14 @@
 package nl.wetzel.tests;
 
 import com.internet.custom.BCrypt;
+import java.util.LinkedList;
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
+import nl.wetzel.entities.Advertisement;
 import nl.wetzel.entities.User;
 import nl.wetzel.exception.DuplicateEntityException;
+import nl.wetzel.facades.AdvertisementFacade;
 import nl.wetzel.facades.UserFacade;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -213,5 +217,28 @@ public class UserTest {
 
         //assert
         assertNull(result);
+    }
+    
+        @Test
+    public void testFindByLimit() {
+        int amount = 4;
+        int pageIndex = 0;
+
+        //stub query
+        TypedQuery<User> query = mock(TypedQuery.class);
+        Mockito.when(em.createNamedQuery(UserFacade.FIND_ALL, User.class)).thenReturn(query);
+
+        //stub the resultset
+        List<User> users = new LinkedList<User>();
+        for (int i = 0; i < amount; i++) {
+            users.add(new User(i));
+        }
+        Mockito.when(query.getResultList()).thenReturn(users);
+
+        List<User> resultUsers = userFacade.findByLimit(0, amount);
+
+        verify(em).createNamedQuery(UserFacade.FIND_ALL, User.class);
+        verify(query).getResultList();
+        assertEquals(users, resultUsers);
     }
 }

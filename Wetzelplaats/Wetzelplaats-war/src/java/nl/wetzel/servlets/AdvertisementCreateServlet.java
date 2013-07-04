@@ -106,16 +106,6 @@ public class AdvertisementCreateServlet extends HttpServlet {
         }
     }
 
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
-
     private void setValues(String title, String description, String priceStr, HttpServletRequest request, HttpServletResponse response, ArrayList<String> errors) throws ServletException, IOException {
         request.setAttribute("errors", errors);
         request.setAttribute("title", title);
@@ -123,4 +113,14 @@ public class AdvertisementCreateServlet extends HttpServlet {
         request.setAttribute("price", priceStr);
         request.getRequestDispatcher("/WEB-INF/advertisement/create.jsp").forward(request, response);
     }
+    
+        /**
+     * Returns a short description of the servlet.
+     *
+     * @return a String containing servlet description
+     */
+    @Override
+    public String getServletInfo() {
+        return "Handles advertisement creation";
+    }// </editor-fold>
 }

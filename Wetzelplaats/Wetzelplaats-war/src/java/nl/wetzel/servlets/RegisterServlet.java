@@ -107,6 +107,11 @@ public class RegisterServlet extends HttpServlet {
         //TODO Mail the password to the user
     }
 
+       /**
+     * Shows errors
+     *
+     * @Forwards error messages
+     */
     private void showError(HttpServletRequest request, HttpServletResponse response, String firstname, String lastname, String email, String password, String password2, ArrayList<String> errors) throws ServletException, IOException {
         request.setAttribute("firstname", firstname);
         request.setAttribute("lastname", lastname);
@@ -124,6 +129,6 @@ public class RegisterServlet extends HttpServlet {
      */
     @Override
     public String getServletInfo() {
-        return "Short description";
+        return "Handles registering";
     }// </editor-fold>
 }

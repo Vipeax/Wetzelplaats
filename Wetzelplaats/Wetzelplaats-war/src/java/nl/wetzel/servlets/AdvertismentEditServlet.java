@@ -40,7 +40,7 @@ public class AdvertismentEditServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        if (request.getParameter("eId") == null) {
+        if (request.getParameter("eId") == null || request.getParameter("ad") == null) {
             response.sendRedirect("/Wetzelplaats-war/index");
             return;
         }
@@ -129,6 +129,6 @@ public class AdvertismentEditServlet extends HttpServlet {
      */
     @Override
     public String getServletInfo() {
-        return "Short description";
+        return "Handles advertisement editing";
     }// </editor-fold>
 }

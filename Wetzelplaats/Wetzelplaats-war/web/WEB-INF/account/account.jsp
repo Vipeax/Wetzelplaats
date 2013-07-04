@@ -21,7 +21,7 @@
                     <!--<div class="adv-block fll"> -->
                     <div class="span3">
                         <h3><a href="/Wetzelplaats-war/ad/view?id=${ad.id}">${ad.name}</a></h3>
-                        <a href="/Wetzelplaats-war/ad/edit?eId=${ad.id}">Edit</a> - <a href="/Wetzelplaats-war/ad/delete?did=${ad.id}&admin=0">Delete</a>
+                        <a href="/Wetzelplaats-war/ad/edit?eId=${ad.id}">Edit</a> - <a href="/Wetzelplaats-war/ad/delete?did=${ad.id}">Delete</a>
 
                         <div class="picture"></div>
 

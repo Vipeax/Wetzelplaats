@@ -94,6 +94,6 @@ public class UserView extends HttpServlet {
      */
     @Override
     public String getServletInfo() {
-        return "Short description";
+        return "Handles user view";
     }// </editor-fold>
 }

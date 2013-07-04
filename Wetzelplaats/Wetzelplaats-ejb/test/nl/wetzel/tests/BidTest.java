@@ -7,6 +7,7 @@ package nl.wetzel.tests;
 import java.util.LinkedList;
 import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import nl.wetzel.entities.Advertisement;
 import nl.wetzel.entities.Bid;
@@ -124,4 +125,64 @@ public class BidTest {
         //assert
         assertEquals(result, bidExpected);
     }
+    
+    @Test
+    public void testFindByUserId() {
+        double price = 0.01;
+        User user = new User();
+        Advertisement ad = new Advertisement();
+
+        //stub the merge
+        when(em.merge(ad)).thenReturn(ad);
+
+        //stub the persist
+        Bid bidStub = new Bid();
+        bidStub.setPrice(price);
+        bidStub.setUserId(user);
+        bidStub.setAdvertisementId(ad);
+        doNothing().when(em).persist(bidStub);
+
+        //call the method
+        Bid result = bidFacade.createBid(price, user, ad);
+           
+        //stub query
+        TypedQuery<Bid> query = mock(TypedQuery.class);
+        Mockito.when(em.createNamedQuery(BidFacade.FIND_BY_USER_ID, Bid.class)).thenReturn(query);
+
+        //stub the resultset
+        List<Bid> bids = new LinkedList<Bid>();
+        bids.add(bidStub);
+        Mockito.when(query.getResultList()).thenReturn(bids);
+
+        List<Bid> resultBids = bidFacade.findByUserId(user);
+
+        verify(em).createNamedQuery(BidFacade.FIND_BY_USER_ID, Bid.class);
+        verify(query).getResultList();
+        assertEquals(bids, resultBids);
+    }
+    
+     @Test
+    public void testFindByLimitAndUser() {
+        int amount = 4;
+        int pageIndex = 0;
+
+        User user = new User();
+        
+        //stub query
+        TypedQuery<Bid> query = mock(TypedQuery.class);
+        Mockito.when(em.createNamedQuery(BidFacade.FIND_BY_LIMIT_AND_USER_ID, Bid.class)).thenReturn(query);
+
+        //stub the resultset
+        List<Bid> bids = new LinkedList<Bid>();
+        for (int i = 0; i < amount; i++) {
+            bids.add(new Bid(i));
+        }
+        Mockito.when(query.getResultList()).thenReturn(bids);
+
+        List<Bid> resultBids = bidFacade.findByLimitAndUser(0, amount, user);
+
+        verify(em).createNamedQuery(BidFacade.FIND_BY_LIMIT_AND_USER_ID, Bid.class);
+        verify(query).getResultList();
+        assertEquals(bids, resultBids);
+     }      
 }

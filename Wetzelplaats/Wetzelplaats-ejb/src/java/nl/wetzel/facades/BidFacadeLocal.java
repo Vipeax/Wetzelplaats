@@ -30,6 +30,11 @@ public interface BidFacadeLocal {
 
     List<Bid> findRange(int[] range);
 
+                    /**
+     * Finds bid by advertisement id
+     *
+     * @return a list containing bids
+     */
     List<Bid> findByAdvertisementId(int advertisementId);
 
     int count();
@@ -41,14 +46,39 @@ public interface BidFacadeLocal {
     public void setAdvertisementFacade(AdvertisementFacadeLocal advertisementFacade);
 
     //Robert J
+         /**
+     * Finds bids by limit and user
+     *
+     * @return a list containing bids
+     */
     public List<Bid> findByUserId(User user);
     
+         /**
+     * Finds bids by limit and user
+     *
+     * @return a list containing bids
+     */
     //R. Wetzels
     List<Bid> findByLimitAndUser(Integer pageIndex, Integer amount, User user);                        
 
-    public int deleteById(int id);
+                        /**
+     * Deletes bid by id
+     *
+     * @return 1: successful / -1: unsuccessful
+     */
+    public int deleteById(Bid bid);
 
+                            /**
+     * Deletes bid by advertisement id
+     *
+     * @return 1: successful / -1: unsuccessful
+     */
     public int deleteByAdId(Advertisement ad);
 
+                            /**
+     * Deletes bid by user id
+     *
+     * @return 1: successful / -1: unsuccessful
+     */
     public int deleteByUserId(User user);
 }

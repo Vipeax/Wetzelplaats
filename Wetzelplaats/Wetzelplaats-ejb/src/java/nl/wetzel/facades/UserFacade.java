@@ -50,6 +50,11 @@ public class UserFacade extends AbstractFacade<User> implements UserFacadeLocal 
         return u;
     }
 
+             /**
+     * Registers user
+     *
+     * @return user
+     */
     @Override
     public User Register(String firstname, String lastname, String email, String password) {
         //check if data complete
@@ -76,6 +81,11 @@ public class UserFacade extends AbstractFacade<User> implements UserFacadeLocal 
         }
     }
 
+                 /**
+     * Finds user by email address
+     *
+     * @return user
+     */
     @Override
     public User findByEmail(String email) {
         try {
@@ -93,6 +103,11 @@ public class UserFacade extends AbstractFacade<User> implements UserFacadeLocal 
     }
 
     //Robert J  
+         /**
+     * Finds users by limit
+     *
+     * @return a list containing users
+     */
     @Override
     public List<User> findByLimit(Integer pageIndex, Integer amount) {
         List<User> result;
@@ -107,6 +122,11 @@ public class UserFacade extends AbstractFacade<User> implements UserFacadeLocal 
     }
 
     //Robert J
+                     /**
+     * Deletes user by id
+     *
+     * @return 1: successful / -1: unsuccessful
+     */
     @Override
     public int deleteById(int id) {
         try {
@@ -125,6 +145,11 @@ public class UserFacade extends AbstractFacade<User> implements UserFacadeLocal 
         }
     }
     
+                         /**
+     * Hashes password
+     *
+     * @return hashed password
+     */
     @Override
     public String hashpwd(String pwd) 
     {

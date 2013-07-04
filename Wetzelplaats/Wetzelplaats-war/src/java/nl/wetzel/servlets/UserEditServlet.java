@@ -155,6 +155,6 @@ public class UserEditServlet extends HttpServlet {
      */
     @Override
     public String getServletInfo() {
-        return "Short description";
+        return "Handles user editing";
     }// </editor-fold>
 }

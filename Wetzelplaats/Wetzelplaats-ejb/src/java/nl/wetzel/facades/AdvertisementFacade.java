@@ -50,6 +50,11 @@ public class AdvertisementFacade extends AbstractFacade<Advertisement> implement
         super(Advertisement.class);
     }
 
+        /**
+     * Finds advertisements by limit
+     *
+     * @return a list containing advertisements
+     */
     @Override
     public List<Advertisement> findByLimit(Integer pageIndex, Integer amount) {
         List<Advertisement> result;
@@ -63,6 +68,11 @@ public class AdvertisementFacade extends AbstractFacade<Advertisement> implement
         return result;
     }
     
+        /**
+     * Finds advertisements by limit and user
+     *
+     * @return a list containing advertisements
+     */
     @Override
     public List<Advertisement> findByLimitAndUser(Integer pageIndex, Integer amount, User user)
     {
@@ -77,6 +87,11 @@ public class AdvertisementFacade extends AbstractFacade<Advertisement> implement
         return result;
     }
 
+        /**
+     * Finds advertisements by title
+     *
+     * @return a list containing advertisements
+     */
     @Override
     public Advertisement findByTitle(String title) {
         try {
@@ -92,6 +107,11 @@ public class AdvertisementFacade extends AbstractFacade<Advertisement> implement
         }
     }
 
+    
+        /**
+     * Creates an advertisement
+     * @return advertisement
+     */
     @Override
     public Advertisement createAdvertisement(String title, String description, double price, User user) {
         if (title == null || description == null) {
@@ -104,15 +124,21 @@ public class AdvertisementFacade extends AbstractFacade<Advertisement> implement
             throw new DuplicateEntityException("Advertisement already exists");
         } else {
             //TODO define ePriceType
-            Advertisement a = new Advertisement(0, title, description, price, false, 1);
-            a.setUserId(user);
-            a.setBidCollection(new ArrayList<Bid>());
+            Advertisement ad = new Advertisement(0, title, description, price, false, 1);
+            ad.setUserId(user);
+            ad.setBidCollection(new ArrayList<Bid>());
 
-            create(a);
-            return a;
+            create(ad);
+            return ad;
         }
     }
 
+    
+        /**
+     * Adds a bid to the advertisement
+     * 
+     * @return advertisement
+     */
     @Override
     public Advertisement addBid(Advertisement ad, Bid bid) {
         List<Bid> bidCollection = (List) ad.getBidCollection();
@@ -129,6 +155,12 @@ public class AdvertisementFacade extends AbstractFacade<Advertisement> implement
     }
 
     //Robert J
+    
+        /**
+     * Removes bid from advertisement
+     *
+     * @return advertisement
+     */
     @Override
     public Advertisement removeBid(Advertisement ad, Bid bid) {
         List<Bid> bidCollection = (List) ad.getBidCollection();
@@ -144,6 +176,11 @@ public class AdvertisementFacade extends AbstractFacade<Advertisement> implement
         return ad;
     }
 
+            /**
+     * Finds advertisements by user id
+     *
+     * @return a list containing advertisements
+     */
     @Override
     public List<Advertisement> findByUserId(User user) {
         List<Advertisement> result;
@@ -155,11 +192,16 @@ public class AdvertisementFacade extends AbstractFacade<Advertisement> implement
         return result;
     }
 
+                /**
+     * Deletes advertisements by id
+     *
+     * @return 1: successful / -1: unsuccessful
+     */
     @Override
-    public int deleteById(int id) {
+    public int deleteById(Advertisement ad) {
         try {
             Query q = em.createNamedQuery(AdvertisementFacade.DELETE_BY_ID, Advertisement.class);
-            q.setParameter("adId", id);
+            q.setParameter("adId", ad.getId());
             q.executeUpdate();
             return 1;
         } catch (RuntimeException e) {
@@ -167,6 +209,11 @@ public class AdvertisementFacade extends AbstractFacade<Advertisement> implement
         }
     }
 
+                /**
+     * Deletes advertisements by user id
+     *
+     * @return 1: successful / -1: unsuccessful
+     */
     @Override
     public int deleteByUserId(User user) {
         try {

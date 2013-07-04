@@ -77,7 +77,32 @@ public class AdvertisementTest {
         verify(query).getResultList();
         assertEquals(ads, resultAds);
     }
+    
+    @Test
+    public void testFindByLimitAndUser() {
+        int amount = 4;
+        int pageIndex = 0;
 
+        User user = new User();
+        
+        //stub query
+        TypedQuery<Advertisement> query = mock(TypedQuery.class);
+        Mockito.when(em.createNamedQuery(AdvertisementFacade.FIND_BY_LIMIT_AND_USER_ID, Advertisement.class)).thenReturn(query);
+
+        //stub the resultset
+        List<Advertisement> ads = new LinkedList<Advertisement>();
+        for (int i = 0; i < amount; i++) {
+            ads.add(new Advertisement(i));
+        }
+        Mockito.when(query.getResultList()).thenReturn(ads);
+
+        List<Advertisement> resultAds = ad.findByLimitAndUser(0, amount, user);
+
+        verify(em).createNamedQuery(AdvertisementFacade.FIND_BY_LIMIT_AND_USER_ID, Advertisement.class);
+        verify(query).getResultList();
+        assertEquals(ads, resultAds);
+    }
+    
     @Test
     public void testFindByTitleCorrect() {
         String titleCorrect = "Advertisement1";
@@ -203,4 +228,56 @@ public class AdvertisementTest {
 
         assertSame(result, adStub);
     }
+    
+    @Test
+    public void testRemoveBid() {
+        Bid bid = new Bid();
+        bid.setPrice(1.1);
+
+        Advertisement adStub = new Advertisement();
+
+        //stub the merge
+        Mockito.when(em.merge(adStub)).thenReturn(adStub);
+
+        Advertisement result = ad.addBid(adStub, bid);
+
+        //add the bid to the ad stub, because we want to have it added as well
+        adStub.getBidCollection().add(bid);
+
+        verify(em).merge(adStub);        
+        
+        result = ad.removeBid(adStub, bid);
+                        
+        assertSame(result, adStub);
+    }
+    
+    @Test
+    public void testFindByUserId() {
+        int amount = 4;
+        int pageIndex = 0;
+
+        String title = "ad test";
+        String description = "this is a test";
+        double price = 1.10;
+        User user = new User();
+
+        Advertisement result = ad.createAdvertisement(title, description, price, user);
+        
+        //stub query
+        TypedQuery<Advertisement> query = mock(TypedQuery.class);
+        Mockito.when(em.createNamedQuery(AdvertisementFacade.FIND_BY_USER_ID, Advertisement.class)).thenReturn(query);
+
+        //stub the resultset
+        List<Advertisement> ads = new LinkedList<Advertisement>();
+        for (int i = 0; i < amount; i++) {
+            ads.add(new Advertisement(i));
+        }
+        Mockito.when(query.getResultList()).thenReturn(ads);
+
+        List<Advertisement> resultAds = ad.findByUserId(user);
+
+        verify(em).createNamedQuery(AdvertisementFacade.FIND_BY_USER_ID, Advertisement.class);
+        verify(query).getResultList();
+        assertEquals(ads, resultAds);
+    }    
 }

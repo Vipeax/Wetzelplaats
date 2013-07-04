@@ -94,6 +94,6 @@ public class IndexServlet extends HttpServlet {
      */
     @Override
     public String getServletInfo() {
-        return "Short description";
+        return "Handles the index page";
     }// </editor-fold>
 }

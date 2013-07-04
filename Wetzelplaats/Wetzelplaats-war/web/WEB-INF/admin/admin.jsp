@@ -26,7 +26,7 @@
                     <!--<div class="adv-block fll"> -->
                     <div class="span3">
                         <h3><a href="/Wetzelplaats-war/ad/view?id=${ad.id}">${ad.name}</a></h3>
-                        <a href="/Wetzelplaats-war/ad/delete?did=${ad.id}&admin=1">Delete</a>
+                        <a href="/Wetzelplaats-war/ad/delete?did=${ad.id}">Delete</a>
 
                         <div class="picture"></div>
 
@@ -104,7 +104,7 @@
                 <i>${user.email}</i>
                 <c:choose>
                 <c:when test="${currentUser!=user.id}">
-                <a href="/Wetzelplaats-war/user/delete?did=${user.id}&admin=1">Delete</a>
+                <a href="/Wetzelplaats-war/user/delete?did=${user.id}">Delete</a>
                 </c:when>
                 </c:choose>
                 <a href="/Wetzelplaats-war/user/edit?id=${user.id}">Edit</a>

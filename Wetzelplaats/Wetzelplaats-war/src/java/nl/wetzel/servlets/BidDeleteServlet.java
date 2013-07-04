@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import nl.wetzel.entities.Advertisement;
 import nl.wetzel.entities.Bid;
+import nl.wetzel.entities.User;
 import nl.wetzel.facades.AdvertisementFacadeLocal;
 import nl.wetzel.facades.BidFacadeLocal;
 
@@ -40,14 +41,28 @@ public class BidDeleteServlet extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException 
+    {
+        if (request.getParameter("bId") == null) {
+            response.sendRedirect("/Wetzelplaats-war/index");
+            return;
+        }
+        
+        User user = (User) request.getSession().getAttribute("user");
         int bidId = Integer.parseInt(request.getParameter("bId"));
-
         Bid bid = bidFacade.find(bidId);
-        Advertisement ad = bid.getAdvertisementId();
-        this.advertisementFacade.removeBid(ad, bid);
-        this.bidFacade.remove(bid);
-        response.sendRedirect("/Wetzelplaats-war/account");
+        if(bid.getUserId().getId() == user.getId())
+        {
+            Advertisement ad = bid.getAdvertisementId();
+            this.advertisementFacade.removeBid(ad, bid);
+            this.bidFacade.remove(bid);
+            response.sendRedirect("/Wetzelplaats-war/account");
+        }
+        
+        else
+        {
+            response.sendRedirect("/Wetzelplaats-war/MagicWord");
+        }
     }
 
     /**
@@ -57,6 +72,6 @@ public class BidDeleteServlet extends HttpServlet {
      */
     @Override
     public String getServletInfo() {
-        return "Short description";
+        return "Handles bid deletion";
     }// </editor-fold>
 }
